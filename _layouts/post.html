@@ -1,0 +1,15 @@
+---
+layout: default
+---
+
+<h1>{{ page.title }}</h1>
+
+{% assign author = site.authors[page.author] %}
+
+<p class="view">{{ page.date | date: "%-d %B %Y" }}</p>
+
+{{content}}
+
+{% if page.tags.size > 0 %}
+<small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
+{% endif %}

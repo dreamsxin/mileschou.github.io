@@ -1,0 +1,12 @@
+title: Miles' Blog
+description: A Developer Notes
+avatar: https://avatars1.githubusercontent.com/u/1258752
+url: https://mileschou.github.io/
+theme: jekyll-theme-cayman
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - CNAME
