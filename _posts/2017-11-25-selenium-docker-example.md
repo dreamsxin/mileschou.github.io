@@ -3,19 +3,19 @@ layout: post
 title: Selenium Docker Example
 ---
 
-這是一個簡單的 [Selenium Docker] 範例
+這是一個簡單的 [Selenium Docker] 範例。
 
-首先先直接開 Container ：
+首先先直接開 Container：
 
 ```bash
 docker run -d -p 4444:4444 -p 5900:5900 selenium/standalone-chrome-debug:3.7.1
 ```
 
-其中 port `4444` 是跟 Selenium 溝通用的， port `5900` 則是 VNC ，密碼固定為 `secret` 。
+其中 port `4444` 是跟 Selenium 溝通用的，port `5900` 則是 VNC，密碼固定為 `secret` 。
 
 啟動完成之後，可以先打開 VNC 來觀察有沒有動靜。
 
-下一步要呼叫 Selenium 做事了，以下使用 [CodeceptJS][] ，先安裝套件：
+下一步要呼叫 Selenium 做事了，以下使用 [CodeceptJS][]，先安裝套件：
 
 ```bash
 npm install -g codeceptjs webdriverio

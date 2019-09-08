@@ -3,11 +3,11 @@ layout: post
 title: Hello World Golang
 ---
 
-雖然對 Go 非常有興趣，可是跟它的語法真的很難適應。今天硬把 Hello world 和 testing 做起來了
+雖然對 Go 非常有興趣，可是跟它的語法真的很難適應。今天硬把 Hello world 和 testing 做起來了。
 
-安裝設定 GOPATH 那些就 pass ，程式碼如下
+安裝設定 GOPATH 那些就 pass，程式碼如下。
 
-首先要有一個 main package + main function 的檔案，我取名為 `main.go` ，這點跟 C 語言應該是一樣的
+首先要有一個 main package + main function 的檔案，我取名為 `main.go`，這點跟 C 語言應該是一樣的
 
 ```go
 // main.go
@@ -55,7 +55,7 @@ func TestSayHello(t *testing.T) {
 }
 ```
 
-查了一下我知道的幾個 go project ，它們的測試都是這樣寫，我也不知道對不對，反正就先照做
+查了一下我知道的幾個 go project 它們的測試都是這樣寫，我也不知道對不對，反正就先照做
 
 ## Run
 
@@ -75,6 +75,6 @@ func TestSayHello(t *testing.T) {
 
 ## 感想
 
-目前 hello world 做起來還蠻順的，不過它有指標，而且資料結構比較多樣化，所以對我來說應該會比較難入門QQ"
+目前 hello world 做起來還蠻順的，不過它有指標，而且資料結構比較多樣化，所以對我來說應該會比較難入門。
 
 可能 Rust 也會看一下再說

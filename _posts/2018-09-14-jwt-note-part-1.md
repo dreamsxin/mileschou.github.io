@@ -1,15 +1,15 @@
 ---
 layout: post
-title: JWT 筆記(1)－－基本介紹
+title: JWT 筆記（一）－－基本介紹
 ---
 
-一直很懶得看 [JWT](https://jwt.io/) ，直到今天總算該面對了。
+一直很懶得看 [JWT](https://jwt.io/)，直到今天總算該面對了。
 
 官方是這麼描述的：
 
 > JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object.
 
-簡單來說，它是標準，可以參考 [RFC 7519][] 。它定義一個可以安全的方法，可以使用 JSON 來交換資訊。
+簡單來說，它是標準，可以參考 [RFC 7519][]。它定義一個可以安全的方法，可以使用 JSON 來交換資訊。
 
 [RFC 7519]: https://tools.ietf.org/html/rfc7519
 
@@ -54,11 +54,9 @@ Header 通常會由兩個部分組成：
 
 ### Payload
 
-Payload 則是存放 claim
+Payload 則是存放 claim，代表著實體或使用者相關的資訊。有三種類型：
 
-claim 代表著實體或使用者相關的資訊。有三種類型：
-
-*   Registered Claims ：這是預定義的 claim ，可加可不加，但建議要加，如
+*   Registered Claims：這是預定義的 claim，可加可不加，但建議要加，如
     | Column | Full name | 中文 |
     | -- | -- | -- |
     | `iss` | Issuer | 發行人 |
@@ -68,8 +66,8 @@ claim 代表著實體或使用者相關的資訊。有三種類型：
     | `nbf` | Not Before | 時間之前（不處理） |
     | `iat` | Issued At | 發行時間 |
     | `jti` | JWT ID | JWT 的唯一識別碼 |
-*   Public Claims ：在 [IANA JSON Web Token Registry](https://www.iana.org/assignments/jwt/jwt.xhtml) 上註冊的名稱，即是 Public Claims。
-*   Private Claims ：不屬於上述兩個 Claim ，則是 Private Claim 。但如果 public claim 有，優先使用 public claims 的命名會比較好。
+*   Public Claims：在 [IANA JSON Web Token Registry](https://www.iana.org/assignments/jwt/jwt.xhtml) 上註冊的名稱，即是 Public Claims。
+*   Private Claims：不屬於上述兩個 Claim，則是 Private Claim。但如果 public claim 有，優先使用 public claims 的命名會比較好。
 
 比方說：
 

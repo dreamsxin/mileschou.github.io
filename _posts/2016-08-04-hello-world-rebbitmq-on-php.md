@@ -3,10 +3,12 @@ layout: post
 title: Hello World RebbitMQ on PHP
 ---
 
-參考 [RebbitMQ Tutorials](https://www.rabbitmq.com/getstarted.html) 第二個，當作是 Hello World 練習，以下使用 PHP 當主要語言，其他套件如下
+參考 [RebbitMQ Tutorials](https://www.rabbitmq.com/getstarted.html) 第二個，當作是 Hello World 練習。
 
-* [php-amqplib](https://github.com/php-amqplib/php-amqplib) ，它有需要的 ext 可以參考 `composer.json`
-* [symfony console](http://symfony.com/doc/current/components/console.html) ，可以直接下指令送訊息
+以下使用 PHP 當主要語言，其他套件如下：
+
+* [php-amqplib](https://github.com/php-amqplib/php-amqplib)，它有需要的 ext 可以參考 `composer.json`
+* [symfony console](http://symfony.com/doc/current/components/console.html)，可以直接下指令送訊息
 * [Docker RebbitMQ](https://hub.docker.com/_/rabbitmq/)
 
 `send.php` 程式碼
@@ -93,4 +95,4 @@ class Receive extends Command
 }
 ```
 
-結果： Receiver 可以開很多個去監聽，原本一對一是 receiver 來不及，可是開到十多個時，幾乎是 send 一傳好，就完成了
+結果：Receiver 可以開很多個去監聽，原本一對一是 receiver 來不及，可是開到十多個時，幾乎是 send 一傳好，就完成了。

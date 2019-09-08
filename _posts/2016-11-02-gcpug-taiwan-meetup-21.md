@@ -19,7 +19,7 @@ title: GCPUG Taiwan Meetup 21 會後心得
 - [Strass.io](https://straas.io/)
 - [簡報](http://go-talks.appspot.com/github.com/StraaS/StraaS-stream-service/slides/live-streaming-service-on-gcp/live-streaming-service-on-gcp.slide#4)
 
-這次分享的主要主題是 Streaming ，老實說我對這個領域是完全陌生。但從這次的分享，可以了解一些大方向的架構。
+這次分享的主要主題是 Streaming，老實說我對這個領域是完全陌生。但從這次的分享，可以了解一些大方向的架構。
 
 首先講者直接說明一般直播的行為：
 
@@ -36,9 +36,9 @@ title: GCPUG Taiwan Meetup 21 會後心得
 
 [GitHub 原始碼](https://github.com/StraaS/StraaS-stream-service)
 
-Live 通常還是接受 RTMP 居多， VOD 則可以接受很多格式，但輸出都會是 HLS / MP4
+Live 通常還是接受 RTMP 居多，VOD 則可以接受很多格式，但輸出都會是 HLS / MP4
 
-流程在簡報的 [13](http://go-talks.appspot.com/github.com/StraaS/StraaS-stream-service/slides/live-streaming-service-on-gcp/live-streaming-service-on-gcp.slide#13) / [14](http://go-talks.appspot.com/github.com/StraaS/StraaS-stream-service/slides/live-streaming-service-on-gcp/live-streaming-service-on-gcp.slide#14) 頁會有圖片說明。從流程圖可以了解， Transcoder 的任務被設計的很單純，就是做轉檔。而任務調配或是錯誤處理等等，都會由 Middleware 處理。在簡報後面有提到它的主要任務：
+流程在簡報的 [13](http://go-talks.appspot.com/github.com/StraaS/StraaS-stream-service/slides/live-streaming-service-on-gcp/live-streaming-service-on-gcp.slide#13) / [14](http://go-talks.appspot.com/github.com/StraaS/StraaS-stream-service/slides/live-streaming-service-on-gcp/live-streaming-service-on-gcp.slide#14) 頁會有圖片說明。從流程圖可以了解，Transcoder 的任務被設計的很單純，就是做轉檔。而任務調配或是錯誤處理等等，都會由 Middleware 處理。在簡報後面有提到它的主要任務：
 
 - 安排適合的機器做 transcode
 - 斷線重連
@@ -124,7 +124,7 @@ https://github.com/edwardchuang/gcp-dns-proxy)
 
 *Simon Su / GCPUG.TW co-organizer*
 
-這是大資料可以使用的服務，它是個 Queue ，聽介紹跟 Amazon SQS 很像
+這是大資料可以使用的服務，它是個 Queue，聽介紹跟 Amazon SQS 很像
 
 > 印象中 SQS 如果資料不刪，過一段時間會被刪除。待確認
 
@@ -136,15 +136,15 @@ Client -> Infra -> Kafka -> Spark -> Cassandra
 Client -> Compute engine -> PubSub -> DataFlow -> BigQuery
 ```
 
-使用 PubSub 的方法有 push mode / pull mode ，講者有流程圖，但目前沒得到分享，所以只能 pass 。但重點是它的訊息不會被刪，直到你對 message ack 才會被刪
+使用 PubSub 的方法有 push mode / pull mode，講者有流程圖，但目前沒得到分享，所以只能 pass。但重點是它的訊息不會被刪，直到你對 message ack 才會被刪
 
-講者有提到 PubSub 的特色：它不是 FIFO ，跟 Amazon SQS 一樣，但他提到很重要的原因：
+講者有提到 PubSub 的特色：它不是 FIFO，跟 Amazon SQS 一樣，但他提到很重要的原因：
 
 大數據的處理，應該是要被設計成非序列處理（或非同步處理），才會有辦法快。或許 PubSub / SQS 這樣設計，也是讓開發人員會不自覺做出符合大數據的可擴展架構。原本還有點嫌棄，但聽到講者這麼說，才知道我是有必要去使用，才能讓程式有一定的可擴展程度。
 
 ## Finally
 
-個人是比較偏愛 GCP ，因為 UI 好看XD ，但符合公司需求還是要 AWS ，因此工作需求還是會以學習與使用 AWS 為主。
+個人是比較偏愛 GCP，因為 UI 好看，但符合公司需求還是要 AWS，因此工作需求還是會以學習與使用 AWS 為主。
 
 最後，除了我外，兩位朋友也都大有收獲，再次感謝主辦單位贊助！
 

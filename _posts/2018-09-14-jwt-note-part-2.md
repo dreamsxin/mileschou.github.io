@@ -1,9 +1,9 @@
 ---
 layout: post
-title: JWT 筆記(2)－－演算法
+title: JWT 筆記（二）－－演算法
 ---
 
-JWT 的雜湊演算法選擇，可以參考 [RFC 7518](https://tools.ietf.org/html/rfc7518#section-3) ， 
+JWT 的雜湊演算法選擇，可以參考 [RFC 7518](https://tools.ietf.org/html/rfc7518#section-3)。 
 
 | "alg" Value | Digital Signature or MAC Algorithm | Implementation Requirements |
 | --- | --- | --- |
@@ -36,7 +36,7 @@ JWT 的雜湊演算法選擇，可以參考 [RFC 7518](https://tools.ietf.org/ht
 
 ## 如何產 key
 
-因需求，應該會使用 `RS256` 或 `ES256` ，接下來來看 key 如何產
+因需求，應該會使用 `RS256` 或 `ES256`，接下來來看 key 如何產
 
 ### RS256
 
@@ -44,7 +44,7 @@ JWT 的雜湊演算法選擇，可以參考 [RFC 7518](https://tools.ietf.org/ht
 
 > A key of size 2048 bits or larger MUST be used with these algorithms.
 
-必須要 2048 bits 以上的 key ，來參考[別人](https://gist.github.com/Holger-Will/3edeea6855f1d69a5368871bce5ea926)怎麼產
+必須要 2048 bits 以上的 key，來參考[別人](https://gist.github.com/Holger-Will/3edeea6855f1d69a5368871bce5ea926)怎麼產
 
 ```
 # generate private key
@@ -70,7 +70,7 @@ openssl ec -in es256-private.pem -pubout -out es256-public.pem
 
 ### 驗證方法
 
-使用 PHP ，如果要使用 ES256 需先安裝 `gmp` 。 
+使用 PHP，如果要使用 ES256 需先安裝 `gmp`。 
 
 Debian 系列：
 

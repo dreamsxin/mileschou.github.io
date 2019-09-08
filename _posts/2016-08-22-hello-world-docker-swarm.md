@@ -3,7 +3,9 @@ layout: post
 title: Hello World! Docker Swarm
 ---
 
-初次把玩 [Docker Swarm][] 筆記，以下使用 [Docker Machine][] + Docker 1.12 + VirtualBox
+初次把玩 [Docker Swarm][] 筆記。
+
+以下使用 [Docker Machine][] + Docker 1.12 + VirtualBox。
 
 ## Create Machine
 
@@ -24,11 +26,12 @@ title: Hello World! Docker Swarm
     $ docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock julienbreux/docker-swarm-gui:latest
     # 或是另一套
     # docker run -it -d -p 8080:8080 -e HOST=192.168.99.100 -e PORT=8080 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer
+
 接著開 node1 上的 8080 port 會看到一片空的網頁
 
 ## Initial Swarm and Join Swarm
 
-接著上面的操作，因為選定是 node1 要當 manager ，所以先切換到 node1 下初始化指令
+接著上面的操作，因為選定是 node1 要當 manager，所以先切換到 node1 下初始化指令
 
 ```
 $ eval $(docker-machine env node1)
@@ -44,7 +47,7 @@ To add a worker to this swarm, run the following command:
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 ```
 
-這邊會提示說 Swarm 啟動，並開啟 2377 port 監聽。目前的 node 是 manager ，其他要加進來的會是叫 worker 。 Swarm 支援多 manager 模式，所以也有加 manager 的方法。如果有注意 GUI 的話，會發現出現一個新的 node1 區塊。這是 node1 裡面 container 的視覺化。
+這邊會提示說 Swarm 啟動，並開啟 2377 port 監聽。目前的 node 是 manager，其他要加進來的會是叫 worker。 Swarm 支援多 manager 模式，所以也有加 manager 的方法。如果有注意 GUI 的話，會發現出現一個新的 node1 區塊。這是 node1 裡面 container 的視覺化。
 
 不過目前只是單純練習 Manager / Worker 模式，接著切換到 node2 node3 下剛剛提示的指令
 
@@ -61,7 +64,7 @@ GUI 這時又會多兩個 `node2` `node3` 區塊，目前因為都沒有 contain
 
 ## Start Service
 
-這裡找一個最簡單最小的 Service 來練習： `nginx:alpine` 。如果要對整個 cluster 作操作的話，需要先切換到 Manager 。
+這裡找一個最簡單最小的 Service 來練習：`nginx:alpine`。如果要對整個 cluster 作操作的話，需要先切換到 Manager 。
 
 使用 `docker service create` 可以建立 container 。
 
@@ -72,7 +75,7 @@ $ docker service create --name web -p 8000:80 nginx:alpine
 4r0x9rts2adklf3tt9816av50
 ```
 
-這時有趣的來了，假設 Container 在 node1 ，那開 `http://<node1_ip>:8000/` 會看到畫面是很合理的。但是神奇的是，另外兩台機器也都看得到哦！
+這時有趣的來了，假設 Container 在 node1，那開 `http://<node1_ip>:8000/` 會看到畫面是很合理的。但是神奇的是，另外兩台機器也都看得到哦！
 
 再來 Swarm 當然也有 scaling
 
@@ -81,7 +84,7 @@ $ docker service scale web=30
 web scaled to 30
 ```
 
-接著容器會佈滿三個 node ，但是 port 都不會衝突，而且三個 node 實際都是分散到各個 container 裡的
+接著容器會佈滿三個 node，但是 port 都不會衝突，而且三個 node 實際都是分散到各個 container 裡的
 
 更新的範例
 
