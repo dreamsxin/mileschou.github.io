@@ -4,6 +4,12 @@ avatar: https://avatars1.githubusercontent.com/u/1258752
 url: https://mileschou.github.io/
 theme: jekyll-theme-cayman
 
+# Use the Pagination plugin
+paginate: 5
+
+plugins:
+  - jekyll-paginate
+
 exclude:
   - Gemfile
   - Gemfile.lock
