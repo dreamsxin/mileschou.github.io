@@ -2,14 +2,10 @@
 layout: default
 ---
 
-<h1>{{ page.title }}</h1>
+{{ content }}
 
-{% assign author = site.authors[page.author] %}
-
-<p class="view">{{ page.date | date: "%-d %B %Y" }}</p>
-
-{{content}}
+<small>Written on {{ page.date | date: "%Y-%m-%d" }}</small>
 
 {% if page.tags.size > 0 %}
-<small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
+<small>#<em>{{ page.tags | join: "</em> - <em>#" }}</em></small>
 {% endif %}
