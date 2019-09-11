@@ -4,6 +4,30 @@ avatar: https://avatars1.githubusercontent.com/u/1258752
 url: https://mileschou.github.io/
 theme: jekyll-theme-cayman
 
+defaults:
+  - scope:
+      path: ""
+      type: ironman
+    values:
+      layout: ironman
+      permalink: /:collection/:path
+  - scope:
+      path: "/ironman/intro-of-ci"
+    values:
+      series: intro-of-ci
+      description: CI 從入門到入坑
+
+nav:
+  - title: 部落格
+    link: /
+  - title: 鐵人賽系列文
+    link: /ironman
+
+
+collections:
+  ironman:
+    output: true
+
 # Use the Pagination plugin
 paginate: 5
 
