@@ -1,5 +1,4 @@
 ---
-day: 28
 title: 為 Legacy Code 接 CI Server 
 ---
 

@@ -1,5 +1,4 @@
 ---
-day: 26
 title: 功能強大的－－GitLab CI 
 ---
 

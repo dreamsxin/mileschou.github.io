@@ -1,0 +1,115 @@
+---
+title: Carbon（4）－－擴充繼承類別的範例
+---
+
+今天來繼續看 Carbon 還有擴充哪些功能
+
+## COMPARISONS
+
+Carbon 提供許多比較的方法，讓我們在判斷時間會方便很多。
+
+### `eq()` `lt()` `gt()` ...
+
+這些方法相信許多開發者都有看過。即使沒看過，每一個方法也都有相對應的別名可以參考使用。
+
+### `between()` `min()` `max()`
+
+這些方法是基於上面的基本比較方法實作出來的。
+
+### `closest()` `farthest()`
+
+這兩個方法是基於 DIFFERENCES 功能實作的。
+
+### `isPast()` `isFuture()` `is*()` ...
+
+這些方法因為非常語言化，所以用起來很方便。會這樣設計，是因為我們在平常用詞時，會不自覺使用這些字眼：「這日期過去了嗎？」「這日期是未來嗎？」「這日期是今天嗎？」等等。
+
+而且都可以跟[昨天][Day 4]提到的建構方法直接串接：
+
+```php
+// 明天是週末嗎？
+Carbon::tomorrow()->isWeekend();
+
+// 今天是禮拜日嗎？
+Carbon::now()->isSunday();
+
+// 訂單過期了嗎？
+Carbon::parse($expireDate)->isPast();
+
+// 交付日到了嗎？
+Carbon::parse($deliveryDate)->isFuture();
+
+// 是生日嗎？當然不是
+Carbon::createFromDate(2000, 1, 1)->isBirthday();
+
+// 硬把日期改成生日
+Carbon::setTestNow(Carbon::createFromDate(2018, 1, 1));
+
+// 是了吧！
+Carbon::createFromDate(2000, 1, 1)->isBirthday();
+```
+
+## ADDITIONS AND SUBTRACTIONS
+
+如果直接修改字串來調整時間，不知道要寫多少程式碼來判斷例外狀況，像是閏年、大小月等等，但使用 Carbon 就很簡單了：
+
+```php
+// 三小時前
+Carbon::now()->subHours(3);
+
+// 下個月
+Carbon::now()->addMonth();
+
+// 去年的今天
+Carbon::now()->subYear();
+
+// 再 10 秒後就跨年了嗎？
+Carbon::now()->addSeconds(10)->isNextYear();
+
+// 19 號開始的鐵人賽，要到 2018-01-18 才會完賽
+Carbon::createFromDate(2017, 12, 19)->addDays(30)->toDateString();
+```
+
+除了年月日時分秒的計算外，它還有一季（三個月）、一世紀（百年）、週（七天）等等常見的算法。
+
+## DIFFERENCES
+
+通常老闆問還有多少天才做得完，那可以用 ADDITIONS 來加日期來跟老闆說哪時會好，但如果是老闆壓時間的話，就得用 DIFFERENCES 來看我們還有多少天可以趕了：
+
+```php
+// 跨年前要完成
+$deadline = Carbon::createFromDate(2018, 1, 1);
+
+// 天啊只剩不到 10 天
+Carbon::now()->diffInDays($deadline);
+```
+
+## MODIFIERS
+
+它能把物件的時間調整成如方法描述一樣，比方說：
+
+```php
+// 這個月月初
+Carbon::now()->startOfMonth();
+
+// 週未的最後一刻
+Carbon::now()->endOfWeek();
+
+// 下禮拜五
+Carbon::now()->next(Carbon::FRIDAY);
+
+// 下一個工作日
+Carbon::now()->nextWeekday();
+```
+
+## 總結
+
+翻完 `Carbon` 程式碼，會發現它實作語意化行為的基礎，是建立在許多基本功能上，比方說加減日期、時間調整和計算差異，這些基本功能可以實作出平常對談的用詞，像是「明天」、「上個月」、「下週」等等。
+
+另外有趣的是，它幾乎所有的方法都是公開的（public），雖然[最小知識原則][]提醒我們最好不要這麼做。但是這三天原始碼看下來，這些方法都是大家一般對時間的認知，因此反而是公開會比較恰當。
+
+最後，這是一個繼承很棒的範例，如果覺得繼承後寫出來的東西不如想像中好用，或許可以參考 Carbon，了解繼承還可以如何寫！
+
+[最小知識原則]: https://github.com/MilesChou/book-refactoring-30-days/blob/master/docs/day12.md
+
+[Day 4]: {% link _ironman/decompose-wheels/day04.md %}

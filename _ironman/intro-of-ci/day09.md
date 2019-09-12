@@ -1,5 +1,4 @@
 ---
-day: 9
 title: 爭什麼！摻在一起做整合測試啊！ 
 ---
 
@@ -88,7 +87,7 @@ class SumTest extends \Codeception\Test\Unit
 
 ## 相關連結
 
-* [Integration Testing][] | 維基百科
+* [Integration Testing][] - 維基百科
 
 [Integration Testing]: https://en.wikipedia.org/wiki/Integration_testing
 [Class Run]: images/day09-codeception-class-run.png

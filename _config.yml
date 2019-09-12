@@ -11,10 +11,35 @@ defaults:
       layout: ironman
       permalink: /:collection/:path
   - scope:
-      path: /ironman/intro-of-ci
+      path: _ironman/analyze-laravel
+    values:
+      series: analyze-laravel
+      description: Laravel 原始碼分析
+      topic_tags: [Laravel]
+  - scope:
+      path: _ironman/decompose-wheels
+    values:
+      series: decompose-wheels
+      description: 輪子們，聽口令，大部分解開始！
+      topic_tags: [PHP]
+  - scope:
+      path: _ironman/golang-started
+    values:
+      series: golang-started
+      description: 從無到有，使用 Go 開發應用程式
+      topic_tags: [Golang]
+  - scope:
+      path: _ironman/intro-of-ci
     values:
       series: intro-of-ci
       description: CI 從入門到入坑
+      topic_tags: [Continuous Integration]
+  - scope:
+      path: _ironman/refactoring
+    values:
+      series: refactoring
+      description: 看到 code 寫成這樣我也是醉了，不如試試重構？
+      topic_tags: [Refactoring]
 
 nav:
   - title: 部落格
@@ -38,3 +63,4 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
+  - .idea

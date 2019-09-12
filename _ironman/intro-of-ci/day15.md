@@ -1,5 +1,4 @@
 ---
-day: 15
 title: 管理貨櫃的碼頭工人－－Docker（1/3） 
 ---
 
@@ -186,8 +185,8 @@ $ docker run -d -p 8080:80 -v $PWD:/var/www/html php:7.0-apache
 
 ## 相關連結
 
-* [Docker —— 從入門到實踐](https://www.gitbook.com/book/philipzheng/docker_practice) | philipzheng
-* [Docker 淺入淺出](https://docs.google.com/presentation/d/1V-UGtg2wp8wQR-ZiHsCKRQVJwTNCSgNn52hof5T3MIU/pub?start=false) | Miles
+* [Docker —— 從入門到實踐](https://www.gitbook.com/book/philipzheng/docker_practice) - philipzheng
+* [Docker 淺入淺出](https://docs.google.com/presentation/d/1V-UGtg2wp8wQR-ZiHsCKRQVJwTNCSgNn52hof5T3MIU/pub?start=false) - Miles
 
 [Docker]: https://www.docker.com/
 [Docker Hub]: https://hub.docker.com/

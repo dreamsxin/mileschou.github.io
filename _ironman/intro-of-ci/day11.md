@@ -1,5 +1,4 @@
 ---
-day: 11
 title: 假的！耦合業障重呀！（2/2） 
 ---
 
@@ -147,7 +146,7 @@ Anyway，寫整合測試或使用 Test Double 都可以提早發現耦合過多�
 
 ## 相關連結
 
-* [Test Double（1）：什麼是測試替身？][] | 搞笑談軟工
+* [Test Double（1）：什麼是測試替身？][] - 搞笑談軟工
 
 [Test Double（1）：什麼是測試替身？]: http://teddy-chen-tw.blogspot.tw/2014/09/test-double1.html
 [Sample Code]: https://github.com/MilesChou/book-intro-of-ci/tree/ebea3dab7bd260fa601b94b533ca08bd0496a536

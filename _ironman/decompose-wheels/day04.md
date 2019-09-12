@@ -1,0 +1,179 @@
+---
+title: Carbon（3）－－建構繼承物件的範例
+---
+
+[昨天][Day 3]了解 Carbon 套件是利用繼承來擴充物件的行為，我們今天一起來看看它是怎麼設計的。
+
+首先原始碼註解很明確的分很多實作區塊，如 [GETTERS AND SETTERS](https://github.com/briannesbitt/Carbon/blob/1.22.1/src/Carbon/Carbon.php#L640-L642)，接下來會以這些區塊來說明它擴充的方法。
+
+## CONSTRUCTORS
+
+這個區塊的方法都是在建立物件，所以大部分都是靜態方法。
+
+分為幾種類型：
+
+* 從 DateTime 實例轉成 Carbon 的建立方法（`Carbon::instance()`）
+* 當要用 fluent style 時，官方建議使用靜態方法（`Carbon::parse()`）來取代 new
+* 取得現在時間（`Carbon::now()`）
+* 快速相對時間，如今天（`Carbon::today()`）、昨天（`Carbon::yesterday()`）、明天（`Carbon::tomorrow()`）。
+* Carbon 支援的最大值（`Carbon::maxValue()`）與最小值（`Carbon::minValue()`）
+* 給「年月日時分秒」的建立方法（`Carbon::create()`）與經過把關的建立方法（`Carbon::createSafe()`）
+* 特定來源資料的建立方法（`Carbon::createFrom*()`）
+* 從現有物件複製物件（`Carbon::copy()`）
+
+以下會挑幾個特別的方法做說明：
+
+### `instance()`
+
+這個方法會先判斷是不是自己（`Carbon`）的實例，再決定要如何做事。
+
+如果是的話會使用 `clone`，不過事實上改成使用 `copy()` 這樣也是可行的：
+
+```php
+if ($dt instanceof static) {
+    return $dt->copy();
+}
+```
+
+而不是的話則會使用 `DateTime` 提供的 `format` 方法與 `getTimezone` 方法來取得 `Carbon` 建構所需要的參數。
+
+這樣設計會有個好處：其他繼承 `DateTime` 的物件也能順利轉換成 `Carbon` 物件。
+
+### `parse()`
+
+[註解](https://github.com/briannesbitt/Carbon/blob/1.22.1/src/Carbon/Carbon.php#L313-L315)裡有提示說，如果要使用 fluent style 的話，用這個靜態方法會比較好，比方說：
+
+```php
+echo Carbon::parse($time)->addDay();
+echo (new Carbon($time))->addDay();
+```
+
+確實在看原始碼時，上面的小括號少一點，會比較容易看懂。
+
+### `today()` `tomorrow()` `yesterday()`
+
+`today()` 是先取得 `now()` 的物件後，再設定時間為 `00:00:00`；`tomorrow()` 和 `yesterday()` 則是先取得 `today()` 物件後再加或減一天。
+
+從這裡的原始碼，會發現物件提供許多語意化的方法，會很容易了解並重用物件所提供的行為。
+
+後面會再討論這些的行為是如何設計的。
+
+### `maxValue()` `minValue()`
+
+因為 DateTime 設計上並不是無上下限的，所以會設計這個方法來取得極限值，來協助判斷是否溢位。很多語言，像 PHP 也有提供 INT 的最大值與最小值的常數：
+
+```php
+echo PHP_INT_MIN . ' ~ ' . PHP_INT_MAX;
+```
+
+這裡會看到有重用 `create()` 方法。
+
+### `create()` `createFromDate()` `createFromTime()`
+
+> 注意：create() 也會受到 *$testNow* 的影響。
+
+Carbon 對 `create()` 的設計是，各別的年月日值，如果有給 `null`，它就會各別設計當下的年月日。
+
+```php
+echo Carbon::now();                     // 2017-12-23 18:55:36
+echo Carbon::create(2018, null, 31);    // 2018-12-31 18:55:36
+```
+
+但時間比較特別，如果「時」給了 `null`，分秒會跟年月日情況一樣；如果「時」不是給 `null`，分秒的預設值則會變 `0`：
+
+```php
+echo Carbon::now();                           // 2017-12-23 18:58:38
+echo Carbon::create(2018, null, 31, null);    // 2018-12-31 18:58:38
+echo Carbon::create(2018, null, 31, 12);      // 2018-12-31 12:00:00
+```
+
+因為時間與日期的特性不同：時間的預設值可以給 `0`，但日期不行。這樣設計的話，`createFromDate()` 與 `createFromTime()` 就能重用這個方法了。
+
+雖然這樣設計的話，`create()` 方法會有例外行為，使用起來可能不是那麼方便。但是當使用者看到這三個方法與它們的參數時，自然會預期使用方法如下：
+
+```php
+echo Carbon::now();                              // 2017-12-23 18:58:38
+echo Carbon::createFromTime(12);                 // 2017-12-23 12:00:00
+echo Carbon::createFromTime(0, 10, 20);          // 2017-12-23 00:10:20
+echo Carbon::createFromDate(2018);               // 2018-12-23 18:58:38
+echo Carbon::createFromDate(null, null, 31);     // 2017-12-31 18:58:38
+echo Carbon::create(2017, 12, 31, 23, 59, 50);   // 2017-12-31 23:59:50
+```
+
+簡單來說當想省略一些參數時，自然不會選擇 `create()`；使用 `createFromDate()`，`null` 很明顯預設會是當下的日期；在使用 `createFromTime()` 的情境下，通常很少人給「時」，但分秒要當下的分秒。
+
+### `createFromFormat()`
+
+[昨天][Day 3]在建構子裡有介紹過了，可以參考。
+
+### `copy()`
+
+會另外開 `copy()` 方法，是保留當未來 `clone` 無法做到的話（比方說深複製），可以在 `copy()` 補充。
+
+## GETTERS AND SETTERS
+
+這裡有許多取值與設值的方法，還有 Magic Method。但有趣的是，Carbon 並沒有宣告自己的屬性，只有使用繼承的設定方法而已。這樣的設計可以減少狀態處理上的問題，但同時就會有效能上的問題。
+
+### `year()` `month()` ...
+
+Carbon 有提供 Magic Method 來取值與設值，所以可以這樣寫：
+
+```php
+$date = Carbon::now();
+
+echo $date->year     // 2017
+echo $date->month    // 12
+
+$date->year = 2018;
+$date->month = 1;
+
+echo $date->year     // 2018
+echo $date->month    // 1
+```
+
+而這些方法能讓開發者使用 fluent style 撰寫程式：
+
+```php
+$date = Carbon::now();
+
+echo $date->year     // 2017
+echo $date->month    // 12
+
+$date->year(2018)
+    ->month(1);
+
+echo $date->year     // 2018
+echo $date->month    // 1
+```
+
+### `setDate()` `setDateTime()` `setTimeFromTimeString()`
+
+`setDate()` [昨天][Day 3]有提過。`setDateTime()` 與 `setTimeFromTimeString()` 則是擴充 DataTime 原本的 `setDate()` 與 `setTime()` 行為。
+
+### `timezone()` `tz()`
+
+`timezone()` 與 `tz()` 都是 `setTimezone() ` 別名（Alias）方法。
+
+翻 Carbon 的原始碼，會發現它有很多別名方法，回到最一開始說的「它提供許多語意化的行為」，因為有很多別名，使用上容易找得到自己想要的行為。但缺點是：當有很多方法可以達成同一個目的時，團隊做法容易不一致。
+
+## WEEK SPECIAL DAYS
+
+每個國家甚至是每個人對於每個禮拜的特別日習慣都不大一樣，像有的人習慣禮拜日是第一天，有的人則是覺得禮拜一才是第一天。這裡可以讓開發者自行定義每個禮拜的特別日。
+
+## TESTING AIDS
+
+這裡的方法是提供給測試使用的，[昨天][Day 3]已有提過，不再贅述。
+
+## LOCALIZATION
+
+這裡可以設定全域的語系，語系的翻譯套件是使用 [`symfony/translation`](http://symfony.com/doc/current/translation.html)。
+
+## STRING FORMATTING
+
+這裡的方法是提供輸出字串的格式化，除了大家常見的 `toDateString()` 外，還有許多遵守 RFC 標準的輸出。
+
+---
+
+今天看的都是建立方法與基本取值的方法，明天會看到一些比較神奇的比較方法或修改方法。
+
+[Day 3]: {% link _ironman/decompose-wheels/day03.md %}

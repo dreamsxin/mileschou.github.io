@@ -1,0 +1,113 @@
+---
+title: Monolog（4）－－Processor 又是哪位？
+---
+
+昨天了解 `Formatter` 的運作方法了，而資料夾還有另一個角色 `Processor`，今天來看看它到底裡面賣的是什麼藥。
+
+## 從使用它到了解它
+
+`Processor` 有兩個地方可以使用，分別在 `Logger` 實作與 `HandlerInterface` 定義，都有 Processor 的影子。
+
+先來看看 `Logger` 實作的介面：
+
+```php
+class Logger implements LoggerInterface
+{
+    public function pushProcessor($callback)
+    {
+        if (!is_callable($callback)) {
+            throw new \InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
+        }
+        array_unshift($this->processors, $callback);
+
+        return $this;
+    }
+
+    public function popProcessor()
+    {
+        if (!$this->processors) {
+            throw new \LogicException('You tried to pop from an empty processor stack.');
+        }
+
+        return array_shift($this->processors);
+    }
+}
+``` 
+
+這裡可以看到，它跟 Handler 一樣是使用 Array Stack 實作儲存。而要成為 `Processor` 的一員條件是 `is_callable`。
+
+而 `HandlerInterface` 的定義也相差不遠：
+
+```php
+interface HandlerInterface
+{
+    public function pushProcessor($callback);
+
+    public function popProcessor();
+}
+```
+
+`HandlerInterface` 可以依需求實作不同的邏輯，所以我們先來看 `Logger` 已經寫好的實作。`Logger` 是這樣使用 `Processor` 的：
+
+```php
+public function addRecord($level, $message, array $context = array())
+{
+    // ...
+
+    foreach ($this->processors as $processor) {
+        $record = call_user_func($processor, $record);
+    }
+    
+    // ...
+}
+```
+
+而 `Processor` 只要實作 Magic Function `__invoke` 即可當成 callable 來用，比方說 `Processor\MemoryUsageProcessor` 的內容如下：
+
+```php
+class MemoryUsageProcessor extends MemoryProcessor
+{
+    public function __invoke(array $record)
+    {
+        $bytes = memory_get_usage($this->realUsage);
+        $formatted = $this->formatBytes($bytes);
+
+        $record['extra']['memory_usage'] = $formatted;
+
+        return $record;
+    }
+}
+```
+
+這樣我們就能動態為 `$record` 加上額外需要的系統資訊了。
+
+而在 Logger 裡，是先跑 `Processor`，才跑 `Handler` 的 `handle` 方法，因此在 Logger 的 `Processor`，實際上會作用在全部的 Handler。
+
+## Handler 的實作
+
+使用 IDE 可以簡單找得到，實作的地方在 `AbstractHandler` 與 `HandlerWrapper`。後者是使用類似 *Proxy Pattern* 的方法在包裝其他的 Handler，所以本質上還是在使用 `AbstractHandler` 的實作。
+
+`AbstractHandler` 的實作如下：
+
+```php
+public function pushProcessor($callback)
+{
+    if (!is_callable($callback)) {
+        throw new \InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
+    }
+    array_unshift($this->processors, $callback);
+
+    return $this;
+}
+
+public function popProcessor()
+{
+    if (!$this->processors) {
+        throw new \LogicException('You tried to pop from an empty processor stack.');
+    }
+
+    return array_shift($this->processors);
+}
+```
+
+事實上與 Logger 完全一樣，重點會是在 `$this->processors` 如何被使用。不同的 Handler 的用法都有點不大一樣，我們留到明天再詳解吧。

@@ -1,0 +1,151 @@
+---
+title: Faker（4）－－Provider 與 Generator 之間的愛恨情仇
+---
+
+如果有認真看前兩天的文章，應該會發現一個很奇怪的事：
+
+* [Day 7][] 提到：`Factory` 產生 `Generator` 物件時，會使用 `addProvider()` 把 `Provider` 加入 `Generator`
+* [Day 8][] 提到：`Provider\Base` 建構子的依賴是 `Generator`
+
+這造成了一個循環引用的關係
+
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuNBEIImkLWWeoY_BJ4ajYd5AB4w5YhcdvgKM9PRa5t71MGeskcXA4LAwTcXI3gbvAK0R0000)
+
+```
+@startuml
+Class Provider\Base
+Class Generator
+Generator <- Provider\Base
+Generator -> Provider\Base
+@enduml
+```
+
+通常這樣的關係是不利於維護的，容易修改一個地方，而讓很多地方同時受影響。不過我們還是先一起來看看它到底在做什麼吧！
+
+> 關於 Generator 使用 Provider 的部分，[Day 7][] 已經有說明，不再贅述。
+
+## Provider\Base 如何使用 Generator
+
+打開 IDE 搜尋一下，會發現 `Provider\Base` 有 3 個方法會用到 `Generator`：
+
+* `optional()`
+* `unique()`
+* `valid()`
+
+與其他產生假資料的方法不同的是：這三個方法會回傳 `Generator` 物件或是另外三種 Generator 物件：
+
+* [`DefaultGenerator`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/DefaultGenerator.php)
+* [`UniqueGenerator`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/UniqueGenerator.php)
+* [`ValidGenerator`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/ValidGenerator.php)
+
+先來了解這三個方法在做什麼：
+
+### optional()
+
+[`optional()`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/Provider/Base.php#L523-L537) 方法需要給一個權重值（百分比）與一個預設值（default），它會依權重值來隨機決定要回傳 `DefaultGenerator` 還是正常的 `Generator`。
+
+先來看個簡單的範例：
+
+```php
+$generator = Faker\Factory::create('en_US');
+
+echo $generator->optional(0, '預設值')->name . PHP_EOL;
+echo $generator->optional(50, '預設值')->name . PHP_EOL;
+echo $generator->optional(100, '預設值')->name . PHP_EOL;
+```
+
+輸出效果：
+
+```
+預設值
+預設值
+Prof. Raquel Stokes III
+```
+
+其中權重 0% 指的是一定會回傳預設值，而 100% 則會回傳 `Generator`，因此有產生隨機的名字，中間的機率則各是 50%。
+
+`DefaultGenerator` 的設計是：先把預設值存下來之後，在由 `__get()`，`__call()` 回傳回去。這樣使用回傳的 Generator 時，我們也不會發現它是 `Generator` 還是 `DefaultGenerator`，蠻有趣的。
+
+## unique()
+
+連續產生一百組假資料，有可能會出現一樣的資料。有時會不允許資料裡有重覆的值，比方說資料庫欄位被設定成 `UNIQUE`，如果 insert 遇到重覆的值就會發生錯誤。
+
+[`unique()`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/Provider/Base.php#L554-L560) 能解決這個問題，它會回傳 `UniqueGenerator`。同一個 `UniqueGenerator` 產生的假資料，可以確保每次都會不一樣。
+
+它的設計是 `Generator` 任務不變，而 `UniqueGenerator` 的任務是記錄已產生過的資料，如有重覆，會再重新跟 `Generator` 要資料。
+
+從 `UniqueGenerator` 呼叫 `Generator` 的[方式](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/UniqueGenerator.php#L48)如下：
+
+```php
+public function __get($attribute)
+{
+    return $this->__call($attribute, array());
+}
+
+public function __call($name, $arguments)
+{
+    // ... 略
+
+    $res = call_user_func_array(array($this->generator, $name), $arguments);
+    
+    // ... 略
+}
+```
+
+一樣舉 `name` 屬性與 `name()` 方法為例，從上面 `UniqueGenerator` 的程式可以得知，最後呼叫 `Generator` 的結果如下：
+
+```php
+$generator = Faker\Factory::create('en_US');
+$uniqueGenerator = new \Faker\UniqueGenerator($generator);
+
+echo $uniqueGenerator->name . PHP_EOL;
+// call_user_func_array(array($this->generator, 'name'), []);
+
+echo $uniqueGenerator->name('male') . PHP_EOL;
+// call_user_func_array(array($this->generator, 'name'), ['male']);
+```
+
+這裡先提示一下：`$generator->name` 與 `$generator->name()` 的結果是一樣的。[Day 7][] 介紹 `Generator` 曾有翻過原始碼，知道 `__get()` 最終跟 `__call()` 一樣，是呼叫 `format()`
+
+因此這個結果可以得知：雖然包裝有做處理，但 `UniqueGenerator` 的介面接到 Generator 的介面是一模一樣的。這正是標準的 *Proxy Pattern*。
+
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuNBEIImkLd3EoKpDA-7op2j9BKfBJ4vLy4rCpqpsJIt9o4zHgEPIKD1MY8zFJotHq8IoanDpSe2SMgX-zzIyrAB4almYA3yqBxEmD1LP56I-WfuTii5So9ROrEZg8Xc38OLk8XfVGTSEIRT3QbuAq7C0)
+
+```
+@startuml
+Class Client
+Interface MagicMethod {
+  + __get()
+  + __call()
+}
+Class Generator
+Class UniqueGenerator
+Client .> MagicMethod
+MagicMethod <|-- Generator
+MagicMethod <|-- UniqueGenerator
+UniqueGenerator -> Generator
+@enduml
+```
+
+> 如果[昨天][Day 8]有翻程式碼的話應該也會發現另一件事：Provider 提供的方法如果有參數，幾乎都會有預設值，即使是看起來沒用處的 `[a, b, c]`，筆者目前也只有發現，還不清楚目的。
+
+## valid()
+
+如果需要產出名字為 `M` 開頭的假資料的話，那麼使用 [`valid()`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/ValidGenerator.php) 會是最好的選擇！
+
+與 `UniqueGenerator` 在驗證假資料不重覆很類似，而 `valid()` 的驗證方法使用 Closure 自定義方法，做法可以更為廣泛。
+
+也因為很類似，所以設計也很像 `UniqueGenerator`，一樣透過 `__get()` 與 `__call()` 轉接到 `Generator`，所以也是使用 *Proxy Pattern*。
+
+---
+
+`Provider\Base` 本身並沒有使用到 `Generator` 的功能，只是單純的把它包裝後再回傳，這樣比較不容易有改 A 壞 B 的情況發生。
+
+事實上，用最頻繁的是其他的 Provider。我們明天再來看看這些 Provider 的細節吧！
+
+## 參考資料
+
+* [Proxy 模式](https://openhome.cc/Gossip/DesignPattern/ProxyPattern.htm) - 良葛格學習筆記
+
+[Day 7]: day07.md
+[Day 8]: day08.md

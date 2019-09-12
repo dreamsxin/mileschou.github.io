@@ -1,5 +1,4 @@
 ---
-day: 3
 title: Agile 與 CI 之間的火花 
 ---
 

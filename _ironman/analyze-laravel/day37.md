@@ -1,0 +1,81 @@
+---
+title: 分析 Collection（1）
+---
+
+> 今天筆者生病，只能簡單打
+
+想想，還是就來看看 [Collection][] 吧！
+
+Laravel 用來處理 array 的小幫手，至今已知道有三種類型：第一種就是 [helpers.php][] 所提供的函式，第二種則是 [Arr][] 類別所提供的靜態方法，今天要講的是第三種－－[Collection][]。
+
+## Collection 與原生 PHP 函式之間的關係
+
+這三種方法之間都有類似的處理方法。不過，我們先來看 Collection 哪些方法跟原生 PHP 提供的函式很像，如 `array_map()` 函式與 `Collection::map()` 方法：
+
+```php
+$data = [1, 2, 3];
+
+array_map(function($value) {
+    return $value * 2;
+}, $data);
+
+// [2, 4, 6]
+
+collect($data)->map(function($value) {
+    return $value * 2;
+}); 
+
+// [2, 4, 6]
+```
+
+原生 PHP 函式被垢病最大的缺點就是：參數位置不統一，一下 array 在前，一下在後。Collection 帶來的好處就是參數容易猜，比較不容易出錯。
+
+## `map()`
+
+今天先來看看筆者很常用的 `map()` 方法：
+
+```php
+public function map(callable $callback)
+{
+    $keys = array_keys($this->items);
+
+    $items = array_map($callback, $this->items, $keys);
+
+    return new static(array_combine($keys, $items));
+}
+```
+
+它也會呼叫原生的 `array_map()`，但因 map 意義比較像用同個一方法來轉換所有元素，並產生另一個新的元素。以此條件來看 `array_map()` 就顯得有點不好用，因為它的問題如下：
+
+```php
+// 沒辦法拿到 $key
+array_map(function($value, $key) {
+    
+}, $items);
+
+// 可以拿到 $key，可是產生的新 array 並非是以 $key 為 key
+$newItems = array_map(function($value, $key) {
+
+}, $items, array_keys($items));
+
+// 必須要使用 array_combine() 來重組 array
+array_combine($keys, $newItems);
+```
+
+不過 `array_map()` 也是有它奇妙的用法：
+
+```php
+$data1 = [1, 2, 3];
+$data2 = [4, 5, 6];
+$data3 = [7, 8, 9];
+
+array_map(function($data1, $data2, $data3) {
+    return $data1 + $data2 + $data3;
+}, $data1, $data2, $data3);
+
+// [12, 15, 18]
+```
+
+[Arr]: https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Support/Arr.php
+[Collection]: https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Support/Collection.php
+[helpers]: https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Support/helpers.php

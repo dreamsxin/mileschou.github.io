@@ -1,5 +1,4 @@
 ---
-day: 6
 title: CI 起步走 
 ---
 
@@ -111,8 +110,8 @@ Compiler 看得懂文章且譯文電腦執行也符合規格，但這並不代�
 
 ## 相關連結
 
-* [Continuous Integration][] | Amazon.com
-* [莫非定律][] | 維基百科
+* [Continuous Integration][] - Amazon.com
+* [莫非定律][] - 維基百科
 
 [CoffeeScript]: http://coffeescript.org/
 [Continuous Integration]: https://www.amazon.com/Continuous-Integration-Improving-Software-Reducing/dp/0321336380

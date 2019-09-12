@@ -1,0 +1,212 @@
+---
+title: array_get()、data_get() 與 object_get() 的差異
+---
+
+這三個都是 Laravel 所提供的 [helpers][] 函式。剛好今天聽到有人提到這個問題，所以就來翻看看。
+
+單就註解與介面來看這三個函式：
+
+```php
+/**
+ * Get an item from an array using "dot" notation.
+ */
+function array_get($array, $key, $default = null);
+
+/**
+ * Get an item from an array or object using "dot" notation.
+ */
+function data_get($target, $key, $default = null);
+
+/**
+ * Get an item from an object using "dot" notation.
+ */
+function object_get($object, $key, $default = null);
+```
+
+可以約略知道 `array_get()` 與 `object_get()` 分別在處理 array 與 object，而 `data_get()` 則是混合的。
+
+## `array_get()`
+
+接著來看 `array_get()` 原始碼：
+
+```php
+function array_get($array, $key, $default = null)
+{
+    return Arr::get($array, $key, $default);
+}
+```
+
+它是把任務交付給 [Arr][] 類別處理的
+
+> 會這樣做有兩種可能：一種是因為 [4.1](https://github.com/laravel/framework/blob/4.1/src/Illuminate/Support/helpers.php) 版以前，並沒有 Arr 類別，這是為了符合過去的習慣所留下來的，但這個可能性較小。較有可能是因為 array 處理越來越複雜，為了讓檔案可以 SRP，所以就另外寫了一個靜態類別來處理。
+
+```php
+public static function get($array, $key, $default = null)
+{
+    // 如果不是一個可用的 array，就回傳預設值
+    if (! static::accessible($array)) {
+        return value($default);
+    }
+
+    // key 是 null 的話，就回傳整個 array 回去
+    if (is_null($key)) {
+        return $array;
+    }
+
+    // 當存在就回傳
+    if (static::exists($array, $key)) {
+        return $array[$key];
+    }
+    
+    // 如果找不到 `.` 的話，而直接存取也沒值，那就回傳 default 值
+    if (strpos($key, '.') === false) {
+        return $array[$key] ?? value($default);
+    }
+    
+    // 如果有 `.` 的話，就一階一階找看看。
+    foreach (explode('.', $key) as $segment) {
+        if (static::accessible($array) && static::exists($array, $segment)) {
+            $array = $array[$segment];
+        } else {
+            return value($default);
+        }
+    }
+    
+    // 把最後找到的結果回傳
+    return $array;
+}
+
+public static function accessible($value)
+{
+    // 可用的 array，要嘛是原生 array，不然就是實作了 ArrayAccess
+    return is_array($value) || $value instanceof ArrayAccess;
+}
+
+public static function exists($array, $key)
+{
+    // ArrayAccess 實例
+    if ($array instanceof ArrayAccess) {
+        return $array->offsetExists($key);
+    }
+
+    // 原生 array
+    return array_key_exists($key, $array);
+}
+```
+
+這裡面不意外的，都是使用 array 的方法在取內容。
+
+## `object_get()`
+
+類似地，`object_get()` 則是對 object 型態的變數取資料：
+
+```php
+function object_get($object, $key, $default = null)
+{
+    // 如果 key 是空的，就把整個 object 回傳
+    if (is_null($key) || trim($key) == '') {
+        return $object;
+    }
+    
+    // 依續把每個階層的 key，用來取得 object 的屬性
+    foreach (explode('.', $key) as $segment) {
+        // 如果不是 object 或屬性不存在的時候，就回傳預設值
+        if (! is_object($object) || ! isset($object->{$segment})) {
+            return value($default);
+        }
+        
+        // 重設 object 為下一個階層
+        $object = $object->{$segment};
+    }
+    
+    // 最後取得的 property 即結果
+    return $object;
+}
+```
+
+整個過程都是使用 object 的取屬性方法（`->`）。
+
+## `data_get()`
+
+`array_get()` 必須要所有階層都是 array 或 ArrayAccess 實例，才能正常地使用。`object_get()` 則要每一階層都是 object。
+
+如果是 array 包 object 或相反，就需要靠 `data_get()` 了。因為它除了同時支援兩種取資料方法，還另外實作了 `*` 的取資料方法，所以原始碼也比較複雜的：
+
+```php
+function data_get($target, $key, $default = null)
+{
+    // key 是空的就直接回傳
+    if (is_null($key)) {
+        return $target;
+    }
+
+    // key 除了用 `.` 區隔外，也可以使用 array
+    $key = is_array($key) ? $key : explode('.', $key);
+
+    // 將 key 一個一個拿出來跑 
+    while (! is_null($segment = array_shift($key))) {
+        // 如果是 * 的話
+        if ($segment === '*') {
+            if ($target instanceof Collection) {
+                // 是 Collection 的話，把裡面的 item 拿出來
+                $target = $target->all();
+            } elseif (! is_array($target)) {
+                // 如果不是 Collection，也不是 array 的話，代表取資料的 key 有問題，直接回預設值
+                return value($default);
+            }
+
+            // 依 key 取得裡面的 value，然後重組成 array
+            $result = Arr::pluck($target, $key);
+
+            // 如果剩下的 key 還有 * 的話，就使用 collapse 把結果打平成一維 array，如果沒有 * 的話就直接回傳
+            return in_array('*', $key) ? Arr::collapse($result) : $result;
+        }
+
+        if (Arr::accessible($target) && Arr::exists($target, $segment)) {
+            // 如果 $target 是個 array 且有資料的話，就使用 array 方法取資料
+            $target = $target[$segment];
+        } elseif (is_object($target) && isset($target->{$segment})) {
+            // 如果 $target 是個 object 且有資料的話，就使用 object 方法取資料
+            $target = $target->{$segment};
+        } else {
+            都不是的話，key 是有問題的，只好回傳預設值
+            return value($default);
+        }
+    }
+    
+    // 回傳最後取到的 target
+    return $target;
+}
+```
+
+`*` 的用法，比方說在[分析 Routing（5）][Day16]曾提到 `addToCollections()` 會建立查詢表：
+
+```php
+$domainAndUri = $route->getDomain().$route->uri();
+
+foreach ($route->methods() as $method) {
+    $this->routes[$method][$domainAndUri] = $route;
+}
+```
+
+下面是應用方法：
+
+```php
+// 取得所有 GET 方法的 route，並轉換成一維陣列
+data_get($this->routes, 'get.*');
+
+// 取得所有 URI 是 `/user` 的 route，並轉換成一維陣列
+data_get($this->routes, '*./user');
+```
+
+---
+
+三種方法都可以像 Javascript 使用 `.` 來取得多維陣列或 object 的取，像 `config()` 在取設定的時候，正是使用這些方法。
+
+不過筆者平常如果要對一堆資料操作的話，還是都會選擇使用 [Collection][]，未來有機會再來翻翻它的原始碼。
+
+[Arr]: https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Support/Arr.php
+[Collection]: https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Support/Collection.php
+[helpers]: https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Support/helpers.php
+
+[Day16]: day16.md

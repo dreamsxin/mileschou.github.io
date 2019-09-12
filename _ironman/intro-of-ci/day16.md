@@ -1,5 +1,4 @@
 ---
-day: 16
 title: 管理貨櫃的碼頭工人－－Docker（2/3） 
 ---
 
@@ -109,8 +108,8 @@ $ docker run -it --rm -v $PWD:/usr/src/app -w /usr/src/app mygulp gulp
 
 ## 相關連結
 
-* [Docker Build](https://docs.google.com/presentation/d/1OrcP6FKFpLwmzPhmFH8-O9SHJEyu-_K69tPw2gqqsHs/pub?start=false) | Miles
-* [Dockerfile reference](https://docs.docker.com/engine/reference/builder/) | Dockerfile 官方文件
+* [Docker Build](https://docs.google.com/presentation/d/1OrcP6FKFpLwmzPhmFH8-O9SHJEyu-_K69tPw2gqqsHs/pub?start=false) - Miles
+* [Dockerfile reference](https://docs.docker.com/engine/reference/builder/) - Dockerfile 官方文件
 
 [Gulp]: http://gulpjs.com/
 [Docker Hub]: https://hub.docker.com/

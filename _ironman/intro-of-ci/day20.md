@@ -1,5 +1,4 @@
 ---
-day: 20
 title: Build Script 
 ---
 

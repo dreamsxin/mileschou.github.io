@@ -1,5 +1,4 @@
 ---
-day: 22
 title: CI 工具大亂鬥 
 ---
 
@@ -11,17 +10,17 @@ CI server 主要的目的是隨時待命，只要程式碼有新的提交，它�
 
 目前常見的 CI server 實作如下：
 
-* [GitLab CI](https://about.gitlab.com/gitlab-ci/) | GitLab built-in Service
-* [Pipelines](https://bitbucket.org/product/features/pipelines) | Bitbucket built-in Service
-* [Jenkins CI](http://jenkins-ci.org/) | 可參考隔壁棚的相關主題：[30 天入門 Ansible 及 Jenkins-CI][]
-* [Concourse CI](https://concourse.ci/) | 可參考隔壁棚的主題：[不一樣的 CI/CD 工具：Concourse 初探][]
+* [GitLab CI](https://about.gitlab.com/gitlab-ci/) - GitLab built-in Service
+* [Pipelines](https://bitbucket.org/product/features/pipelines) - Bitbucket built-in Service
+* [Jenkins CI](http://jenkins-ci.org/) - 可參考隔壁棚的相關主題：[30 天入門 Ansible 及 Jenkins-CI][]
+* [Concourse CI](https://concourse.ci/) - 可參考隔壁棚的主題：[不一樣的 CI/CD 工具：Concourse 初探][]
 * [Circle CI](https://circleci.com/)
 * [Travis CI](https://travis-ci.org/)
 * [Drone.io](https://drone.io/)
-* [TeamCity](https://www.jetbrains.com/teamcity/) | JetBrains 家出的 CI
+* [TeamCity](https://www.jetbrains.com/teamcity/) - JetBrains 家出的 CI
 * [Codeship](https://codeship.com/)
-* [Bamboo](https://www.atlassian.com/software/bamboo) | Atlassian 家出的 CI
-* [Scrutinizer](https://scrutinizer-ci.com/) | 需要付錢，功能很多，有語言限制
+* [Bamboo](https://www.atlassian.com/software/bamboo) - Atlassian 家出的 CI
+* [Scrutinizer](https://scrutinizer-ci.com/) - 需要付錢，功能很多，有語言限制
 * [PHPCI](https://www.phptesting.org/)
 * [Strider CD](http://strider-cd.github.io/)
 

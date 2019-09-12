@@ -1,5 +1,4 @@
 ---
-day: 29
 title: 有了 CI Server，然後呢？ 
 ---
 

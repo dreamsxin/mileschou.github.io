@@ -1,5 +1,4 @@
 ---
-day: 14
 title: 到處流浪的伺服器 
 ---
 
@@ -242,9 +241,9 @@ service mysql restart
 
 ## 相關連結
 
-* [04. 怎麼用 Vagrant 練習 Ansible？](http://ithelp.ithome.com.tw/articles/10185003) | 現代 IT 人一定要知道的 Ansible 自動化組態技巧系列 第 4 天
-* [[Day 02] Vagrant 介紹](http://ithelp.ithome.com.tw/articles/10184824) | 30 天入門 Ansible 及 Jenkins-CI
-* [[Day 03] Vagrant 基本設定](http://ithelp.ithome.com.tw/articles/10184915) | 30 天入門 Ansible 及 Jenkins-CI
+* [04. 怎麼用 Vagrant 練習 Ansible？](http://ithelp.ithome.com.tw/articles/10185003) - 現代 IT 人一定要知道的 Ansible 自動化組態技巧系列 第 4 天
+* [[Day 02] Vagrant 介紹](http://ithelp.ithome.com.tw/articles/10184824) - 30 天入門 Ansible 及 Jenkins-CI
+* [[Day 03] Vagrant 基本設定](http://ithelp.ithome.com.tw/articles/10184915) - 30 天入門 Ansible 及 Jenkins-CI
 
 [VirtualBox]: https://www.virtualbox.org/
 [Vagrant]: https://www.vagrantup.com/

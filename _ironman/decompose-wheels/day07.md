@@ -1,0 +1,238 @@
+---
+title: Faker（2）－－Factory 與 Generator
+---
+
+Faker 套件使用方法非常單純－－使用工廠（`Factory`）建構產生器（`Generator`），然後把產生器拿來用就對了。
+
+如果有認真翻原始碼的話，會發現它是有經過設計的。內部元件間是鬆耦合狀態，這也表示我們也是能夠簡單地客製化自己的產生器的。
+
+以下會以類別名討論，為節省版面空間，將會把 `Faker` 命名空間省略。
+
+## 負責生產線的 Factory
+
+[`Factory`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/Factory.php) 是標準的 *Simple Factory Pattern* 實作，它使用靜態方法 `create()` 取得固定一種類型的物件－－`Generator`。類別圖如下：
+
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuNBEIImkLd3EoKpDAu5ot1AJI_ABAg4yzzIyrA94e00NH962hYwI2gY87KAPWfL2QN4g5rI90ffKSb5gOaagbqDgNWhGTW00)
+
+```
+@startuml
+Class Client
+Class Factory
+Class Generator
+Client -- Factory
+Client --> Generator : use
+Factory -> Generator : create
+@enduml
+```
+
+`Generator` 是需要經過組裝的，因客戶要求的 `$locale` 不同，而會有不同的組裝內容。跟現實生活的生產線一樣，組裝 `Generator` 的任務是交由 `Factory` 負責的。
+
+`Client`，也就是使用 Faker 套件的客戶端，只要使用 `Factory::create()` 就能保證一定會拿到 `Generator`。如果物件組裝過程有問題的話，則會丟例外。
+
+## 負責產生假資料的 Generator
+
+[`Generator`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/Generator.php) 的 doc block 定義了很多屬性和方法，但會發現裡面完全沒有實作，也就是全靠 [`__get()`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/Generator.php#L266-L269) 與 [`__call()`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/Generator.php#L277-L280) 達成目的。
+
+```php
+public function __get($attribute)
+{
+    return $this->format($attribute);
+}
+
+public function __call($method, $attributes)
+{
+    return $this->format($method, $attributes);
+}
+```
+
+接著我們會發現它們裡面用不同的方法呼叫了同一個方法 [`format()`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/Generator.php#L220-L223)：
+
+```php
+public function format($formatter, $arguments = array())
+{
+    return call_user_func_array($this->getFormatter($formatter), $arguments);
+}
+```
+
+這裡因為 method 參數命名的關係，筆者也搞混了一陣子。後來才發現是這樣的：我們來找 doc block 裡屬性與方法名字一樣的，如 `name` 與 `name()`，然後代入上面的 Magic Method 試試：
+
+
+```php
+public function __get($attribute = 'name')
+{
+    return $this->format($attribute);
+}
+
+public function __call($method = 'name', $attributes = [])
+{
+    return $this->format($method, $attributes);
+}
+```
+
+這時代入 `format()` 就會非常容易理解了：
+
+```php
+$this->format('name');
+$this->format('name', []);
+```
+
+因此 `format()` 的任務就很明白了：它會用取到的 Formatter 拿來當 callback 呼叫。
+
+再來翻 [`getFormatter()`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/Generator.php#L230-L243) 做了什麼：
+
+```php
+public function getFormatter($formatter)
+{
+    foreach ($this->providers as $provider) {
+        if (method_exists($provider, $formatter)) {
+            $this->formatters[$formatter] = array($provider, $formatter);
+
+            return $this->formatters[$formatter];
+        }
+    }
+    throw new \InvalidArgumentException(sprintf('Unknown formatter "%s"', $formatter));
+}
+```
+
+首先最開頭的 if 實作方法，有點類似 [*Registry of Singleton Pattern*]()－－手邊有一系列的物件，但想確保每個物件都是單例。
+
+```php
+if (isset($this->formatters[$formatter])) {
+    return $this->formatters[$formatter];
+}
+```
+
+第二段的 `foreach` 會把所有的 Provider 拿出來一個一個找看看有沒有同名的 method。
+
+```php
+foreach ($this->providers as $provider) {
+    if (method_exists($provider, $formatter)) {
+        $this->formatters[$formatter] = array($provider, $formatter);
+
+        return $this->formatters[$formatter];
+    }
+}
+```
+
+像剛剛的 `name` 屬性或方法，實際呼叫會找到 [`Provider\Person`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/Provider/Person.php#L47) 的 `name` 方法。接下來會把 callback 設定單例，之後 `Client` 就能經由 `Generator` 直接轉接到 `Provider\Person` 裡的同名函式了。
+
+這是標準 *Facade Pattern*－－所有對 Provider 操作的行為，都隱藏在 Generator 的 [`getFormatter()`](https://github.com/fzaninotto/Faker/blob/v1.7.1/src/Faker/Generator.php#L230-L243) 裡面。
+
+而最後如果都找不到的話，就會丟例外：
+
+```php
+throw new \InvalidArgumentException(sprintf('Unknown formatter "%s"', $formatter));
+```
+
+### 組合技 parse
+
+`parse()` 的原始碼如下：
+
+```php
+public function parse($string)
+{
+    return preg_replace_callback('/\{\{\s?(\w+)\s?\}\}/u', array($this, 'callFormatWithMatches'), $string);
+}
+```
+
+看 [`preg_replace_callback`](http://php.net/manual/en/function.preg-replace-callback.php) 函式文件說明，第二個參數是 callback，實際呼叫的函式是下面這一個：
+
+```php
+protected function callFormatWithMatches($matches)
+{
+    return $this->format($matches[1]);
+}
+```
+
+這個[正則](https://regexper.com/#%2F%5C%7B%5C%7B%5Cs%3F(%5Cw%2B)%5Cs%3F%5C%7D%5C%7D%2F)主要會把下面的文字抓出來，然後一個一個丟到 callback：
+
+```php
+// 原始文字
+$string = '{{ word1 }} {{ word2 }}';
+
+// 實際 preg_replace_callback 會做的事
+$this->callFormatWithMatches([
+    '{{ word1 }}',
+    'word1,
+])
+
+$this->callFormatWithMatches([
+    '{{ word2 }}',
+    'word2,
+])
+```
+
+`format()` 會接到陣列第二個值，也就是 `word1` 和 `word2`，取代則是整個 pattern 取代。而 `format()` 前面也追過原始碼了，它會轉接到 Provider 對應的方法。
+
+也許有點難理解，來看看它的[測試案例](https://github.com/fzaninotto/Faker/blob/v1.7.1/test/Faker/GeneratorTest.php#L76-L82)好了：
+
+```php
+public function testParseReturnsStringWithTokensReplacedByFormatters()
+{
+    $generator = new Generator();
+    $provider = new FooProvider();
+    $generator->addProvider($provider);
+    $this->assertEquals('This is foobar a text with foobar', $generator->parse('This is {{fooFormatter}} a text with {{ fooFormatter }}'));
+}
+```
+
+它裡面用了一個自定義的 [`FooProvider`](https://github.com/fzaninotto/Faker/blob/v1.7.1/test/Faker/GeneratorTest.php#L128-L139)，裡面長這樣：
+
+```php
+class FooProvider
+{
+    public function fooFormatter()
+    {
+        return 'foobar';
+    }
+
+    public function fooFormatterWithArguments($value = '')
+    {
+        return 'baz' . $value;
+    }
+}
+```
+
+因此這個 `Generator` 加上 `FooProvider` 會有這樣的效果：
+
+```php
+$generator = new Generator();
+$provider = new FooProvider();
+$generator->addProvider($provider);
+
+$generator->fooFormatter  // foobar
+```
+
+而使用在 `parse()` 上則會有這樣的效果：
+
+```php
+$generator->parse('This is {{fooFormatter}} a text with {{ fooFormatter }}'); 
+
+// 將會回傳 'This is foobar a text with foobar'
+```
+
+講這麼多，其實結論就是：下面這兩段程式碼的效果是一樣的：
+
+```php
+echo "你好我是 {$generator->name}，這位 {$generator->name} 是我的好朋友\n";
+
+echo $generator->parse("你好我是 {{ name }}，這位 {{ name }} 是我的好朋友\n");
+```
+
+輸出結果：
+
+```
+你好我是 Ms. Elissa Schinner，這位 Miss Dannie Mraz II 是我的好朋友
+你好我是 Candelario Leffler，這位 Robyn Lubowitz 是我的好朋友
+```
+
+---
+
+其他方法相較單純，像 `addProvider()` 之類的，就不介紹了。
+
+今天把生線工人 Factory 與產生器 Generator 介紹完了，明天來細看 `Provider` 的設計。
+
+## 參考資料
+
+* [Simple Factory 模式](https://openhome.cc/Gossip/DesignPattern/SimpleFactory.htm) - 良葛格學習筆記
+* [Facade 模式](https://openhome.cc/Gossip/DesignPattern/FacadePattern.htm) - 良葛格學習筆記

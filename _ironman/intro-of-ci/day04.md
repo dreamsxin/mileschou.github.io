@@ -1,5 +1,4 @@
 ---
-day: 4
 title: 先求有，再求好？ 
 ---
 
@@ -67,11 +66,11 @@ Agile 有些方法也是確保交付的產品是正確的，如：
 
 ## 相關連結
 
-* [MVP][] | 維基百科
-* [TDD][] | 維基百科
-* [BDD][] | 維基百科
-* [ATDD][] | 維基百科
-* [DoD][] | Scrum Alliance
+* [MVP][] - 維基百科
+* [TDD][] - 維基百科
+* [BDD][] - 維基百科
+* [ATDD][] - 維基百科
+* [DoD][] - Scrum Alliance
 
 [TDD]: https://en.wikipedia.org/wiki/Test-driven_development
 [BDD]: https://en.wikipedia.org/wiki/Behavior-driven_development

@@ -1,5 +1,4 @@
 ---
-day: 7
 title: Hello Testing 
 ---
 
@@ -292,7 +291,7 @@ if ($actual === $expectedSub) {
 
 ## 相關連結
 
-* [動手寫 Unit Test][] | In 91 30天快速上手TDD
+* [動手寫 Unit Test][] - In 91 30天快速上手TDD
 
 [動手寫 Unit Test]: https://dotblogs.com.tw/hatelove/2012/11/07/learning-tdd-in-30-days-day3-how-to-write-a-unit-test-code
 

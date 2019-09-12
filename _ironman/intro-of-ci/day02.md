@@ -1,5 +1,4 @@
 ---
-day: 2
 title: 還記得第一次寫程式嗎？ 
 ---
 
@@ -117,8 +116,8 @@ Bug 大家都很怕，而相信大家也都知道，最好的對策就是「早�
 
 ## 相關連結
 
-* [Continuous Integration][] | 維基百科
-* [Legacy code][] | 維基百科
+* [Continuous Integration][] - 維基百科
+* [Legacy code][] - 維基百科
 
 [Continuous Integration]: https://en.wikipedia.org/wiki/Continuous_integration
 [Legacy code]: https://en.wikipedia.org/wiki/Legacy_code

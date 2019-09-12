@@ -1,5 +1,4 @@
 ---
-day: 25
 title: 不公開專案的好選擇－－Circle CI 
 ---
 

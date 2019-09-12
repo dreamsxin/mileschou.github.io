@@ -1,5 +1,4 @@
 ---
-day: 19
 title: Inspection 
 ---
 
@@ -48,9 +47,9 @@ Inspection 有非常多種檢查項目，大部分的做法是分析原始碼，
 
 ## 相關連結
 
-* [PHP_CodeSniffer][] | GitHub
-* [PMD][] | PMD
-* [Robustness Testing](https://en.wikipedia.org/wiki/Robustness_testing) | 維基百科
+* [PHP_CodeSniffer][] - GitHub
+* [PMD][] - PMD
+* [Robustness Testing](https://en.wikipedia.org/wiki/Robustness_testing) - 維基百科
 
 [PHP_CodeSniffer]: https://github.com/squizlabs/PHP_CodeSniffer
 [PMD]: https://pmd.github.io/

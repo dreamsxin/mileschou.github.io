@@ -1,5 +1,4 @@
 ---
-day: 24
 title: 開源專案的好選擇－－Travis CI 
 --- 
 

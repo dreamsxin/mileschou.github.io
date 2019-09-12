@@ -1,0 +1,186 @@
+---
+title: 解析 Middleware 的實作細節
+---
+
+到就目前所知，Middleware 是由 [Pipeline][Day07] 實作的，而程式裡出現 Pipeline 有兩次。一次是 Global middleware，也就是 [Http Kernel][Day17] 所寫的這段程式碼：
+
+```php
+return (new Pipeline($this->app))
+            ->send($request)
+            ->through($this->app->shouldSkipMiddleware() ? [] : $this->middleware)
+            ->then($this->dispatchToRouter());
+```
+
+另一個則是 [Router][Day18] 裡面的這段程式碼：
+
+```php
+$middleware = $shouldSkipMiddleware ? [] : $this->gatherRouteMiddleware($route);
+
+return (new Pipeline($this->container))
+                ->send($request)
+                ->through($middleware)
+                ->then(function ($request) use ($route) {
+                    return $this->prepareResponse(
+                        $request, $route->run()
+                    );
+                });
+```
+
+今天繼續看 `gatherRouteMiddleware()`：
+
+```php
+public function gatherRouteMiddleware(Route $route)
+{
+    // 呼叫 `gatherMiddleware()` 取得一組 middleware 後，再解析它
+    $middleware = collect($route->gatherMiddleware())->map(function ($name) {
+        return (array) MiddlewareNameResolver::resolve($name, $this->middleware, $this->middlewareGroups);
+    })->flatten();
+
+    return $this->sortMiddleware($middleware);
+}
+``` 
+
+`gatherMiddleware()` 可以取得屬於某個 Route 的 middleware：
+
+```php
+public function gatherMiddleware()
+{
+    // computedMiddleware 使用類似單例的方法產生
+    if (! is_null($this->computedMiddleware)) {
+        return $this->computedMiddleware;
+    }
+
+    $this->computedMiddleware = [];
+
+    return $this->computedMiddleware = array_unique(array_merge(
+        // middleware 由兩個地方產生的
+        $this->middleware(), $this->controllerMiddleware()
+    ), SORT_REGULAR);
+}
+
+public function middleware($middleware = null)
+{
+    // 取得 $action['middleware']
+    if (is_null($middleware)) {
+        return (array) ($this->action['middleware'] ?? []);
+    }
+
+    // 這邊以下就是在設定 Route 的 middleware
+    if (is_string($middleware)) {
+        $middleware = func_get_args();
+    }
+
+    $this->action['middleware'] = array_merge(
+        (array) ($this->action['middleware'] ?? []), $middleware
+    );
+
+    return $this;
+}
+
+public function controllerMiddleware()
+{
+    // 如果不是 controller action 就不需要解析
+    if (! $this->isControllerAction()) {
+        return [];
+    }
+
+    // 從 controller dispatcher 取得 middleware
+    return $this->controllerDispatcher()->getMiddleware(
+        $this->getController(), $this->getControllerMethod()
+    );
+}
+```
+
+`$this->controllerDispatcher()->getMiddleware()` 的程式碼如下：
+
+```php
+public function getMiddleware($controller, $method)
+{
+    // 如果 Controller 沒有 getMiddleware() 就回傳空 array
+    if (! method_exists($controller, 'getMiddleware')) {
+        return [];
+    }
+
+    // 解析 Controller::getMiddleware() 的內容
+    return collect($controller->getMiddleware())->reject(function ($data) use ($method) {
+        return static::methodExcludedByOptions($method, $data['options']);
+    })->pluck('middleware')->all();
+}
+```
+
+所以 Controller 也有辦法定義屬於它的 middleware。[文件裡面](https://laravel.com/docs/5.7/controllers#basic-controllers)並沒有明確地提到，只有簡單帶過。
+
+使用範例是像下面這樣：
+
+```php
+class IndexController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware(FooMiddleware::class, [
+            'only' => ['hello', 'world']
+        ]);
+        $this->middleware(BarMiddleware::class, [
+            'except' => ['welcome']
+        ]);
+    }
+}
+```
+
+`only` 和 `except` 的語意就不多解釋，後面接的字串代表的是方法名稱，如 `except` 的例子會對應到的方法指的是 `IndexController@welcome`。
+
+當把兩組 middleware 依序都拿到之後，使用 `MiddlewareNameResolver::resolve` 解析，傳入的第二個與第三個參數分別是 `middleware` 與 `middlewareGroups`，這兩個參數是何時設定的呢？其實在一開始[分析 Bootstrap][Day02] 時有帶過，它是 Http Kernel 初始化會做的事之一。
+
+```php
+public static function resolve($name, $map, $middlewareGroups)
+{
+    // 如果傳入的 $name 是 Closure 的話，就直接回傳來用
+    if ($name instanceof Closure) {
+        return $name;
+    }
+
+    // 如果 map 裡找得到，而且也是 Closure 的話，就直接回傳來用
+    if (isset($map[$name]) && $map[$name] instanceof Closure) {
+        return $map[$name];
+    }
+
+    // 如果 group 裡有的話，就解析 group 裡面的 middleware
+    if (isset($middlewareGroups[$name])) {
+        return static::parseMiddlewareGroup($name, $map, $middlewareGroups);
+    }
+
+    list($name, $parameters) = array_pad(explode(':', $name, 2), 2, null);
+
+    return ($map[$name] ?? $name).(! is_null($parameters) ? ':'.$parameters : '');
+}
+```
+
+最後會回傳的形式，以 API 的 `throttle:60,1` 設定來說，最後的結果會長的像下面這個樣子：
+
+```
+Illuminate\Routing\Middleware\ThrottleRequests:60,1
+```
+
+這會在 [Pipeline][Day07] 的時候，再解析出來成為類別名與參數。
+
+最後會使用 `sortMiddleware()` 排序：
+
+```php
+protected function sortMiddleware(Collection $middlewares)
+{
+    return (new SortedMiddleware($this->middlewarePriority, $middlewares))->all();
+}
+```
+
+排序會受 `middlewarePriority` 參數的影響。而從整體順序來看，我們可以了解 Middleware 的優先權如下：
+
+```
+Global > Route > Controller
+```
+
+其實分析程式，會提高對掌握框架的程度，並且可以正確地用它，是非常好的。
+
+[Day02]: day02.md
+[Day07]: day07.md
+[Day17]: day17.md
+[Day18]: day18.md

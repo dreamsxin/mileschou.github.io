@@ -1,5 +1,4 @@
 ---
-day: 5
 title: 簡單的好習慣，是 CI 的一大步 
 ---
 
@@ -123,9 +122,9 @@ var_dump($val);
 
 ## 相關連結
 
-* [Version Control System][] | 維基百科
-* [破窗效應][] | 維基百科
-* [開發人員應遵循的七項持續整合要領][] | Teddy 搞笑談軟工
+* [Version Control System][] - 維基百科
+* [破窗效應][] - 維基百科
+* [開發人員應遵循的七項持續整合要領][] - Teddy 搞笑談軟工
 
 [GitHub]: https://github.com/
 [GitBook]: https://www.gitbook.com/

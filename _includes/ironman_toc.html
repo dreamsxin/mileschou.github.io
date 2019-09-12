@@ -1,8 +1,6 @@
+{% assign articles = include.articles | where:"series", include.series %}
 <ul>
-{% assign articles = include.articles | where: 'series', include.series %}
-{% for article in include.articles %}
-{% if article.url != page.url %}
-<li><a href="{{ article.url }}">Day {{ article.day }} - {{ article.title }}</a></li>
-{% endif %}
+{% for article in articles %}
+<li><a href="{{ article.url }}">Day {{ forloop.index }} - {{ article.title }}</a></li>
 {% endfor %}
 </ul>

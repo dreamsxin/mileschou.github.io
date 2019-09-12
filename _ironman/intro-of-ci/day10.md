@@ -1,5 +1,4 @@
 ---
-day: 10
 title: 假的！耦合業障重呀！（1/2） 
 ---
 
@@ -233,8 +232,8 @@ class SquareTest extends \Codeception\Test\Unit
 
 ## 相關連結
 
-* [Test Double（1）：什麼是測試替身？][] | 搞笑談軟工
-* [只有一位開發人員的專案也需要了解如何消除七種浪費][] | 搞笑談軟工
+* [Test Double（1）：什麼是測試替身？][] - 搞笑談軟工
+* [只有一位開發人員的專案也需要了解如何消除七種浪費][] - 搞笑談軟工
 
 
 [Test Double（1）：什麼是測試替身？]: http://teddy-chen-tw.blogspot.tw/2014/09/test-double1.html

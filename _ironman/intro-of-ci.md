@@ -1,8 +1,6 @@
 ---
-day: 0
 title: CI 從入門到入坑
 description: 2017 iT 邦幫忙鐵人賽
-permalink: /:collection/intro-of-ci
 ---
 
 DevOps 說：開發、測試與維運應該互相合作，解決問題並完成任務。CI 的目標是：開發與測試密切合作，並產出讓維運可快速部署的高品質軟體。對開發者來說 CI 也是個快速回饋機制，相信沒有什麼能比「寫完程式立即看到成果」來的興奮的事了。就讓我們來體驗 30 天的興奮，並一起入坑吧！
@@ -35,7 +33,7 @@ CI 是一個觀念或文化，大部分的人講 CI 都是在說 CI server，雖
 
 ## 目錄
 
-{% include ironman_toc.html articles=site.ironman series=intro-of-ci %}
+{% include ironman_toc.html articles=site.ironman series="intro-of-ci" %}
 
 ## 誌謝
 

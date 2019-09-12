@@ -1,5 +1,4 @@
 ---
-day: 27
 title: 多樣服務整合－－Pipelines 
 ---
 

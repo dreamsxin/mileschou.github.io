@@ -1,5 +1,4 @@
 ---
-day: 21
 title: Pipeline 
 ---
 
@@ -43,7 +42,7 @@ title: Pipeline
 
 ## 相關連結
 
-* [Pipeline][] | 維基百科
+* [Pipeline][] - 維基百科
 
 [Pipeline]: https://en.wikipedia.org/wiki/Pipeline_transport
 

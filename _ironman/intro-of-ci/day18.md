@@ -1,5 +1,4 @@
 ---
-day: 18
 title: 流浪漢與碼頭工人的應用 
 ---
 
@@ -83,8 +82,8 @@ Vagrant 與 Docker 各有它們的好用之處，但主要目的都是為了快�
 
 ## 相關連結
 
-* [Vagrant Tutorial（1）雲端研發人員，你也需要虛擬機！](http://www.codedata.com.tw/social-coding/vagrant-tutorial-1-developer-and-vm) | William Yeh @ CodeData
-* [Docker —— 從入門到實踐](https://www.gitbook.com/book/philipzheng/docker_practice) | philipzheng
+* [Vagrant Tutorial（1）雲端研發人員，你也需要虛擬機！](http://www.codedata.com.tw/social-coding/vagrant-tutorial-1-developer-and-vm) - William Yeh @ CodeData
+* [Docker —— 從入門到實踐](https://www.gitbook.com/book/philipzheng/docker_practice) - philipzheng
 
 [Vagrant Provider]: https://www.vagrantup.com/docs/providers/
 [VirtualBox]: https://www.virtualbox.org/
