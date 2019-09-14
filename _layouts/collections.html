@@ -1,0 +1,13 @@
+---
+layout: default
+---
+
+{{ content }}
+
+{% assign tags = page.topic_tags | concat: page.tags %}
+{% if tags.size > 0 %}
+<h2>Tags</h2>
+<div class="tags">
+    #{{ tags | join: " #" }}
+</div>
+{% endif %}

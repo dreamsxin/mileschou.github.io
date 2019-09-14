@@ -1,7 +1,6 @@
 ---
 layout: page
-title: 鐵人賽系列文
-permalink: /ironman
+title: 鐵人賽
 ---
 
 * [CI 從入門到入坑]({% link _ironman/intro-of-ci.md %})

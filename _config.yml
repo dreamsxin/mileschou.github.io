@@ -41,15 +41,19 @@ defaults:
       description: 看到 code 寫成這樣我也是醉了，不如試試重構？
       topic_tags: [Refactoring]
 
-nav:
-  - title: 部落格
-    link: /
-  - title: 鐵人賽系列文
-    link: /ironman
-
 collections:
   ironman:
     output: true
+  series:
+    output: true
+
+nav:
+  - title: 部落格
+    link: /
+  - title: 鐵人賽
+    link: /ironman
+  - title: 系列文
+    link: /series
 
 # Use the Pagination plugin
 paginate: 5
