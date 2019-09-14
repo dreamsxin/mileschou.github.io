@@ -55,10 +55,18 @@ nav:
   - title: 系列文
     link: /series
 
-# Use the Pagination plugin
+# Use the Pagination plugin, see https://github.com/jekyll/jekyll-paginate
 paginate: 5
 
+# Use the Archives plugin, see https://github.com/jekyll/jekyll-archives
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+    - year
+
 plugins:
+  - jekyll-archives
   - jekyll-paginate
 
 exclude:
