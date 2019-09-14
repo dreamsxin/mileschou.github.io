@@ -1,5 +1,7 @@
 ---
-title: 管理貨櫃的碼頭工人－－Docker（2/3） 
+title: 管理貨櫃的碼頭工人－－Docker（2/3）
+tags:
+- docker
 ---
 
 好啦！今天要來講如何使用 Dockerfile 建置一個客製化 Docker Image 了！

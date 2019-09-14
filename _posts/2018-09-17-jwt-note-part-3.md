@@ -1,6 +1,7 @@
 ---
 layout: post
 title: JWT 筆記（三）－－JWT 相關資料
+tags: [jwt]
 ---
 
 JWT 相關的 RFC 有很多個，都是由 *JOSE（JSON Object Signing and Encryption）Working Group* 所制定的。

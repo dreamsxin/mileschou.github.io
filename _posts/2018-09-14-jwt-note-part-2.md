@@ -1,6 +1,7 @@
 ---
 layout: post
 title: JWT 筆記（二）－－演算法
+tags: [jwt]
 ---
 
 JWT 的雜湊演算法選擇，可以參考 [RFC 7518](https://tools.ietf.org/html/rfc7518#section-3)。 

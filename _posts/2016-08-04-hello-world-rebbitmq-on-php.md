@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Hello World RebbitMQ on PHP
+tags: [php]
 ---
 
 參考 [RebbitMQ Tutorials](https://www.rabbitmq.com/getstarted.html) 第二個，當作是 Hello World 練習。

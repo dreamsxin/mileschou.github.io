@@ -1,6 +1,7 @@
 ---
 layout: post
 title: JWT 筆記（一）－－基本介紹
+tags: [jwt]
 ---
 
 一直很懶得看 [JWT](https://jwt.io/)，直到今天總算該面對了。

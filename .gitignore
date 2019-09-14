@@ -30,4 +30,5 @@ Desktop.ini
 /.classpath
 
 # Build files
+/.sass-cache
 /_site

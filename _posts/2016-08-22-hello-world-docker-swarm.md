@@ -1,6 +1,8 @@
 ---
 layout: post
 title: Hello World! Docker Swarm
+tags:
+- docker
 ---
 
 初次把玩 [Docker Swarm][] 筆記。
