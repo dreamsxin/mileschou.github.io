@@ -43,6 +43,8 @@ defaults:
       description: 我是誰？我在哪？
 
 collections:
+  elixir:
+    output: true
   ironman:
     output: true
   series:
