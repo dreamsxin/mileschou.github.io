@@ -1,0 +1,8 @@
+{% assign articles = include.articles | where:"categories", include.topic %}
+<ul>
+    {% for article in articles reversed %}
+    {% if article.url != page.url %}
+    <li><a href="{{ article.url }}">Day {{ forloop.index }} - {{ article.title }}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>

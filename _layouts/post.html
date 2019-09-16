@@ -4,8 +4,5 @@ layout: default
 
 {{ content }}
 
-<small>Written on {{ page.date | date: "%Y-%m-%d" }}</small>
-
-{% if page.tags.size > 0 %}
-<small>#<em>{{ page.tags | join: "</em> - <em>#" }}</em></small>
-{% endif %}
+<div><small>Written on {{ page.date | date: "%Y-%m-%d" }}</small></div>
+<div>{% include small_tag_links.html tags=page.tags %}</div>

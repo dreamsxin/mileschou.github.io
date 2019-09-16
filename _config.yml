@@ -6,6 +6,17 @@ theme: jekyll-theme-cayman
 
 defaults:
   - scope:
+      path: _posts/ironman
+      type: posts
+    values:
+      permalink: /:categories/:title
+  - scope:
+      path: _posts/ironman/authentication
+      type: posts
+    values:
+      category: [ironman, authentication]
+      description: 我是誰？我在哪？
+  - scope:
       type: ironman
     values:
       layout: ironman
