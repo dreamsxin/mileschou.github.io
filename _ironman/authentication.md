@@ -11,6 +11,12 @@ tags:
 
 {% include ironman_toc.html articles=site.ironman series="authentication" %}
 
+待決定：
+
+* CSP
+* CSRF
+* XSS
+
 ## 誌謝
 
 * 感謝老婆為了支持我寫作，將家裡打點好好的

@@ -12,9 +12,11 @@ title: 定義範圍
 
 ## 術語或專有名詞
 
-與去年寫的 [Laravel 原始碼分析](https://github.com/MilesChou/articles/blob/master/src/ironman-analyze-laravel/README.md)情況不同，這次一樣會有很多英文專有名詞，筆者認為有明確的中文翻譯時，才會使用中文，並且會在文章第一次出現的地方，附上對應的英文名詞。如：
+與去年寫的 [Laravel 原始碼分析][]情況不同，這次一樣會有很多英文專有名詞，筆者認為有明確的中文翻譯時，才會使用中文，並且會在文章第一次出現的地方，附上對應的英文名詞。如：
 
-> 身分驗證（authentication）是一個過程，目的是讓我們知道使用者的身分。
+```
+身分驗證（authentication）是一個過程，目的是讓我們知道使用者在系統實體身分為何。
+```
 
 無法或很難翻譯成中文的會以原文為主，如 *assertion*。
 
@@ -50,3 +52,5 @@ title: 定義範圍
 [HTTP]: https://tools.ietf.org/html/rfc2616
 [AD]: https://en.wikipedia.org/wiki/Active_Directory
 [LDAP]: https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol
+
+[Laravel 原始碼分析]: {% link _ironman/analyze-laravel.md %}

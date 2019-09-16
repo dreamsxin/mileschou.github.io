@@ -44,5 +44,5 @@ title: 身分驗證的定義
 ## 參考資料
 
 * [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html)
-* [身分驗證](https://en.wikipedia.org/wiki/Authentication) | 維基百科
-* [生物辨識技術](https://en.wikipedia.org/wiki/Biometrics) | 維基百科
+* [身分驗證](https://en.wikipedia.org/wiki/Authentication) - 維基百科
+* [生物辨識技術](https://en.wikipedia.org/wiki/Biometrics) - 維基百科
