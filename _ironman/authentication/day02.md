@@ -1,5 +1,5 @@
 ---
-title: 身分驗證的定義
+title: 什麼是身分驗證？
 ---
 
 引用 OpenID Connect Core 所提到的術語（terminology）：

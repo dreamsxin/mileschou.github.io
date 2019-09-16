@@ -1,5 +1,5 @@
 ---
-title: 授權的定義
+title: 什麼是授權？
 ---
 
 身分驗證（Authentication）、授權（Authorization）與 ACL（Access Control List）或 RBAC（Role-based Access Control）的差異
