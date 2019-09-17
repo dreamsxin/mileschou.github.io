@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 我是誰？我在哪？
-description: 2020 iT 邦幫忙鐵人賽
+description: iT 邦幫忙第十一屆鐵人賽
 category:
 - ironman
 tags:
