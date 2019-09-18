@@ -47,11 +47,6 @@ defaults:
     values:
       series: refactoring
       description: 看到 code 寫成這樣我也是醉了，不如試試重構？
-  - scope:
-      path: _ironman/authentication
-    values:
-      series: authentication
-      description: 我是誰？我在哪？
 
 collections:
   elixir:
