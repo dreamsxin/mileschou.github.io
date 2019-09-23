@@ -115,7 +115,7 @@ public function getData(array $query)
 
 public function getDataById($id)
 {
-    $this->>getData([
+    $this->getData([
         'id' => $id,
     ]);
 }

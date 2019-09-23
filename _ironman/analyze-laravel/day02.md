@@ -177,7 +177,7 @@ return (new Pipeline($this->app))
 
 [`handle()`](https://github.com/laravel/framework/blob/5.7/src/Illuminate/Foundation/Console/Kernel.php#L117-L138) 實作很簡單：bootstrap、getArtisan、run。其中 Artisan 比較複雜，未來有機會再來討論。
 
-[`bootstrap`()](https://github.com/laravel/framework/blob/5.7/src/Illuminate/Foundation/Console/Kernel.php#L294-L307) 實作比 Http Kernel 多了幾件事：
+[`bootstrap()`](https://github.com/laravel/framework/blob/5.7/src/Illuminate/Foundation/Console/Kernel.php#L294-L307) 實作比 Http Kernel 多了幾件事：
 
 ```php
 $this->app->loadDeferredProviders();
