@@ -1,7 +1,12 @@
 ---
 title: 輪子們，聽口令，大部分解開始！
 description: 2018 iT 邦幫忙鐵人賽
+layout: post
+category:
+- ironman
 tags:
+- ironman
+- ironman-2018
 - php
 ---
 
@@ -9,4 +14,6 @@ tags:
 
 ## 目錄
 
-{% include ironman_toc.html articles=site.ironman series="decompose-wheels" %}
+{% assign ironman_articles=site.categories["ironman"] %}
+
+{% include ironman_posts_toc.html articles=ironman_articles topic="decompose-wheels" %}

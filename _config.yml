@@ -17,6 +17,12 @@ defaults:
       category: [ironman, authentication]
       description: 我是誰？我在哪？
   - scope:
+      path: _posts/ironman/2018/decompose-wheels
+      type: posts
+    values:
+      category: [ironman, decompose-wheels]
+      description: 輪子們，聽口令，大部分解開始！
+  - scope:
       type: ironman
     values:
       layout: ironman
@@ -27,11 +33,6 @@ defaults:
       series: analyze-laravel
       description: Laravel 原始碼分析
       topic_tags: [Laravel]
-  - scope:
-      path: _ironman/decompose-wheels
-    values:
-      series: decompose-wheels
-      description: 輪子們，聽口令，大部分解開始！
   - scope:
       path: _ironman/golang-started
     values:
