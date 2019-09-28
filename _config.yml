@@ -23,6 +23,12 @@ defaults:
       category: [ironman, decompose-wheels]
       description: 輪子們，聽口令，大部分解開始！
   - scope:
+      path: _posts/ironman/2017/start-to-ci
+      type: posts
+    values:
+      category: [ironman, start-to-ci]
+      description: CI 從入門到入坑
+  - scope:
       type: ironman
     values:
       layout: ironman
@@ -38,11 +44,6 @@ defaults:
     values:
       series: golang-started
       description: 從無到有，使用 Go 開發應用程式
-  - scope:
-      path: _ironman/intro-of-ci
-    values:
-      series: intro-of-ci
-      description: CI 從入門到入坑
   - scope:
       path: _ironman/refactoring
     values:

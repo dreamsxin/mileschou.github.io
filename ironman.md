@@ -19,4 +19,4 @@ title: iT 邦幫忙鐵人賽
 
 ## 第八屆
 
-* [CI 從入門到入坑]({% link _ironman/intro-of-ci.md %}) - [iT邦幫忙第八屆鐵人賽優選](https://ithelp.ithome.com.tw/2017ironman/8th_winner)
+* [CI 從入門到入坑]({% post_url ironman/2017/2016-11-30-start-to-ci %}) - [iT邦幫忙第八屆鐵人賽優選](https://ithelp.ithome.com.tw/2017ironman/8th_winner)

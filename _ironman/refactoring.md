@@ -17,7 +17,7 @@ tags:
 
 未來 30 天，將會分享我對於重構的了解，以及示範如何做重構，希望大家對重構能有更深刻的認識。
 
-[持續整合]: {% link _ironman/intro-of-ci.md %}
+[持續整合]: {% post_url ironman/2017/2016-11-30-start-to-ci %}
 
 ## 目錄
 
