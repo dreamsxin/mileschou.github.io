@@ -1,5 +1,10 @@
 ---
 title: 後宮語言三千養成計劃
+layout: post
+category:
+- ironman
+tags:
+- ironman
 ---
 
 古有後宮佳麗三千，現有後宮語言修練三十天。今晚，你選哪一道菜？
