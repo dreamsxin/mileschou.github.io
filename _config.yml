@@ -68,7 +68,7 @@ nav:
     link: /series
 
 # Use the Pagination plugin, see https://github.com/jekyll/jekyll-paginate
-paginate: 5
+paginate: 10
 
 # Use the Archives plugin, see https://github.com/jekyll/jekyll-archives
 jekyll-archives:
