@@ -11,7 +11,7 @@ defaults:
     values:
       permalink: /:categories/:title
   - scope:
-      path: _posts/ironman/authentication
+      path: _posts/ironman/11th/authentication
       type: posts
     values:
       category: [ironman, authentication]

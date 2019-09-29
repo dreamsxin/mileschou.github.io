@@ -5,7 +5,7 @@ title: iT 邦幫忙鐵人賽
 
 ## 第十一屆
 
-* [我是誰？我在哪？]({% post_url ironman/2019-09-16-authentication %})
+* [我是誰？我在哪？]({% post_url ironman/11th/2019-09-16-authentication %})
 
 ## 第十屆
 
