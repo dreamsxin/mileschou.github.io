@@ -4,6 +4,8 @@ avatar: https://avatars1.githubusercontent.com/u/1258752
 url: https://mileschou.github.io/
 theme: jekyll-theme-cayman
 
+permalink: /:categories/:year/:month/:day/:title
+
 defaults:
   - scope:
       path: _posts/ironman
