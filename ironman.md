@@ -9,7 +9,7 @@ title: iT 邦幫忙鐵人賽
 
 ## 第十屆
 
-* [Laravel 原始碼分析]({% link _ironman/analyze-laravel.md %}) - [iT邦幫忙第十屆鐵人賽優選](https://ithelp.ithome.com.tw/2019ironman/reward)
+* [Laravel 原始碼分析]({% link _ironman/analyze-laravel.md %}) - iT 邦幫忙第十屆鐵人賽優選
 
 ## 第九屆
 
@@ -19,4 +19,4 @@ title: iT 邦幫忙鐵人賽
 
 ## 第八屆
 
-* [CI 從入門到入坑]({% post_url ironman/2017/2016-11-30-start-to-ci %}) - [iT邦幫忙第八屆鐵人賽優選](https://ithelp.ithome.com.tw/2017ironman/8th_winner)
+* [CI 從入門到入坑]({% post_url ironman/2017/2016-11-30-start-to-ci %}) - iT 邦幫忙第八屆鐵人賽優選

@@ -7,6 +7,10 @@ POST:=new
 
 # -----------------------------------------------------------------------------
 
+build:
+	rm -rf _site
+	bundle exec jekyll build
+
 server:
 	bundle exec jekyll serve --host 0.0.0.0
 
