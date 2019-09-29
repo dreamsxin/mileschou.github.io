@@ -23,6 +23,12 @@ defaults:
       category: [ironman, decompose-wheels]
       description: 輪子們，聽口令，大部分解開始！
   - scope:
+      path: _posts/ironman/2018/refactoring
+      type: posts
+    values:
+      category: [ironman, refactoring]
+      description: 看到 code 寫成這樣我也是醉了，不如試試重構？
+  - scope:
       path: _posts/ironman/2017/start-to-ci
       type: posts
     values:
@@ -44,11 +50,6 @@ defaults:
     values:
       series: golang-started
       description: 從無到有，使用 Go 開發應用程式
-  - scope:
-      path: _ironman/refactoring
-    values:
-      series: refactoring
-      description: 看到 code 寫成這樣我也是醉了，不如試試重構？
 
 collections:
   elixir:
