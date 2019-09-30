@@ -50,7 +50,8 @@
 
 ## 參考資料
 
-[OAuth 2.0 for Native Apps](https://tools.ietf.org/html/rfc8252)
+* [OAuth 2.0 for Native Apps](https://tools.ietf.org/html/rfc8252)
+* [Securely set up OAuth2 for Mobile Apps, Browser Apps, and Single Page Apps](https://www.ory.sh/oauth2-for-mobile-app-spa-browser/)
 
 # JSON Web Token
 
