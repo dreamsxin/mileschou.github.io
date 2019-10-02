@@ -3,15 +3,18 @@ layout: page
 title: iT 邦幫忙鐵人賽
 ---
 
+> 追星依報名倒序排序。
+
 ## 第十一屆
 
 * [我是誰？我在哪？]({% post_url ironman/11th/2019-09-16-authentication %})
 
 ### 追星
 
-* [Laravel 6.0 初體驗！怎麼用最新的 laravel 架網站！](https://ithelp.ithome.com.tw/users/20120550/ironman/2575) - Recca Chao
-* [下班加減學點Golang與Docker](https://ithelp.ithome.com.tw/users/20104930/ironman/2647) - Nathan Lu
 * [Git 其然，Git 其所以然](https://ithelp.ithome.com.tw/users/20103676/ironman/2846) - 若虛
+* [和艦長一起 30 天玩轉 GitLab](https://ithelp.ithome.com.tw/users/20120986/ironman/2733) - ChengWeiChen
+* [下班加減學點Golang與Docker](https://ithelp.ithome.com.tw/users/20104930/ironman/2647) - Nathan Lu
+* [Laravel 6.0 初體驗！怎麼用最新的 laravel 架網站！](https://ithelp.ithome.com.tw/users/20120550/ironman/2575) - Recca Chao
 
 ## 第十屆
 
