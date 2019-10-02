@@ -31,6 +31,12 @@ defaults:
       category: [ironman, refactoring]
       description: 看到 code 寫成這樣我也是醉了，不如試試重構？
   - scope:
+      path: _posts/ironman/2018/golang-started
+      type: posts
+    values:
+      category: [ironman, golang-started]
+      description: 從無到有，使用 Go 開發應用程式
+  - scope:
       path: _posts/ironman/2017/start-to-ci
       type: posts
     values:
@@ -47,11 +53,6 @@ defaults:
       series: analyze-laravel
       description: Laravel 原始碼分析
       topic_tags: [Laravel]
-  - scope:
-      path: _ironman/golang-started
-    values:
-      series: golang-started
-      description: 從無到有，使用 Go 開發應用程式
 
 collections:
   elixir:

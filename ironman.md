@@ -22,9 +22,9 @@ title: iT 邦幫忙鐵人賽
 
 ## 第九屆
 
-* [從無到有，使用 Go 開發應用程式]({% link _ironman/golang-started.md %}) - 完賽
 * [輪子們，聽口令，大部分解開始！]({% post_url ironman/2018/2017-12-18-decompose-wheels %}) - 未完賽
 * [看到 code 寫成這樣我也是醉了，不如試試重構？]({% post_url ironman/2018/2017-12-10-refactoring %}) - 寫完三十天，但不符合完賽資格
+* [從無到有，使用 Go 開發應用程式]({% post_url ironman/2018/2017-12-08-golang-started %}) - 完賽
 
 ## 第八屆
 
