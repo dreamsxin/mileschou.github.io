@@ -2,7 +2,7 @@
 title: 分析 Pipeline（2）
 ---
 
-昨天使用範例說明 Pipeline 的包裝方法，相信至少可以略懂個一二。接下來先補充一下 [`parsePipeString()`](https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Pipeline/Pipeline.php#L167-L176) 在做什麼：
+昨天使用範例說明 Pipeline 的包裝方法，相信至少可以略懂個一二。接下來先補充一下 [`parsePipeString()`](https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Pipeline/Pipeline.php#L167-L176) 在做什麼。
 
 ```php
 protected function parsePipeString($pipe)

@@ -2,7 +2,7 @@
 title: 分析 Auth（2）
 ---
 
-透過 [AuthManager][] 取得 [SessionGuard][] 實例，接著在 [Authenticate Middleware][] 會呼叫 `check()` 方法驗證：
+透過 [AuthManager][] 取得 [SessionGuard][] 實例，接著在 [Authenticate Middleware][] 會呼叫 `check()` 方法驗證。
 
 ```php
 if ($this->auth->guard($guard)->check()) {

@@ -2,7 +2,7 @@
 title: 分析 Lumen Application－－dispatch() 下篇
 ---
 
-繼續看 [RoutesRequests][] 下面的方法：
+繼續看 [RoutesRequests][] 下面的方法。
 
 * `createDispatcher()`
 * `sendExceptionToHandler()`

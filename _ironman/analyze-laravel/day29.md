@@ -2,7 +2,7 @@
 title: 分析 Auth（6）－－Authorization
 ---
 
-[Laravel 文件](https://laravel.com/docs/5.7/authorization#authorizing-actions-using-policies)有提到幾種方法來確認授權：
+[Laravel 文件](https://laravel.com/docs/5.7/authorization#authorizing-actions-using-policies)有提到幾種方法來確認授權。
 
 * Via The User Model
 * Via Middleware

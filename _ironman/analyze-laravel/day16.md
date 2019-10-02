@@ -2,7 +2,7 @@
 title: 分析 Routing（5）
 ---
 
-[Route][] 帶有單一個路由的資訊。從它在 Router 如何被初始化的程式碼，可以知道它有哪些基本的資訊：
+[Route][] 帶有單一個路由的資訊。從它在 Router 如何被初始化的程式碼，可以知道它有哪些基本的資訊。
 
 ```php
 protected function newRoute($methods, $uri, $action)

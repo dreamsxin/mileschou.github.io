@@ -2,7 +2,7 @@
 title: 分析 Laravel Feature Test
 ---
 
-今天要來分析內建測試是如何實作的，先來看官方[測試範例][ExampleTest]程式碼：
+今天要來分析內建測試是如何實作的，先來看官方[測試範例][ExampleTest]程式碼。
 
 ```php
 public function testBasicTest()

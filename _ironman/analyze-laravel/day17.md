@@ -2,7 +2,7 @@
 title: 分析 Routing（6）
 ---
 
-回過頭來，我們來看 [Http Kernel][] 的這段程式碼：
+回過頭來，我們來看 [Http Kernel][] 的這段程式碼。
 
 ```php
 return (new Pipeline($this->app))

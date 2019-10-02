@@ -2,7 +2,7 @@
 title: 如何正確地在 Response 加 Header（1）
 ---
 
-前一陣子，朋友在社群分享小知識：
+前一陣子，朋友在社群分享小知識。
 
 > $routeMiddleware 裡面的 middleware 加上 $header 的話會有問題，要在 $middleware 宣告才能保證生效
 

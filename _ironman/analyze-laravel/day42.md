@@ -2,7 +2,7 @@
 title: 分析 bootstrap 流程－－Lumen 篇
 ---
 
-與 Laravel 一樣，從進入點 [index.php][] 開始看起：
+與 Laravel 一樣，從進入點 [index.php][] 開始看起。
 
 ```php
 $app = require __DIR__.'/../bootstrap/app.php';

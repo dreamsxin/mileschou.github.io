@@ -2,7 +2,7 @@
 title: 分析 Pipeline（1）
 ---
 
-在[分析 bootstrap 流程][Day02]的最後面的 `handle()` 時，有提到[這段程式碼](https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Foundation/Http/Kernel.php#L148-L151)：
+在[分析 bootstrap 流程][Day02]的最後面的 `handle()` 時，有提到[一段程式碼](https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Foundation/Http/Kernel.php#L148-L151)。
 
 ```php
 // 解析 request 並執行 Controller

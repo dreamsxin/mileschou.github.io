@@ -2,7 +2,9 @@
 title: 分析 Routing（3）
 ---
 
-昨天在最後面，可以知道一件很重要的資訊：Router 裡面所指的 action 原形，其實是 array。以昨天的例子來說：
+昨天在最後面，可以知道一件很重要的資訊：Router 裡面所指的 action 原形，其實是 array。
+
+以昨天的例子來說：
 
 ```php
 $this->app->make('router')

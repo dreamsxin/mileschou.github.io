@@ -2,7 +2,7 @@
 title: 分析 Session（2）
 ---
 
-先回顧一下類別圖，等等的說明搭著圖看會更好理解：
+先回顧一下類別圖，等等的說明搭著圖看會更好理解。
 
 ![](http://www.plantuml.com/plantuml/png/bP9FJm913CNlyocQU7Nu0CGG8chae0UvxgNi5fWuT3PjLqB4xwwoJ1337_Qqa-Rz-jg-7QgXMBEC3gTgWgL16L4LnZ4soy1eL4oQkavYnGiopadWqm7SG2NXWqIX3oY2wrkOM1A2m6h89Ralvm8RoGnBWWcfXiJFo5Ka6UVwNl7NRvHuEuaM8omNLBnHdJHOalKb_IENigxjnoa_IIunkz7orxapczzjVAIP-RpFhduEITwtbt7jVNeIvWlhRGRNJPFNg5hQRmQvsy44uFq0_cdxmBJAUHm5ZkhQOlB-P6XxdopjaCOsqdjKgWxRGw-fVwzoolGabtoLLkol_856ARq7wcRzW8PJr8xKKuWTYTScncx4aBXgbl4R)
 

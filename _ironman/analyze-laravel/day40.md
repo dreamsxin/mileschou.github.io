@@ -2,7 +2,7 @@
 title: 再看 tap()
 ---
 
-`tap()` 之前有提過，是 [helpers.php][] 的方法之一：
+`tap()` 之前有提過，是 [helpers.php][] 的方法之一。
 
 ```php
 function tap($value, $callback = null)

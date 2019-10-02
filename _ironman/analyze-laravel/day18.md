@@ -2,7 +2,9 @@
 title: 分析 Routing（7）
 ---
 
-繼續昨天的 `runRoute()`，直接來看原始碼：
+繼續昨天的 `runRoute()`。
+
+直接來看原始碼：
 
 ```php
 protected function runRoute(Request $request, Route $route)

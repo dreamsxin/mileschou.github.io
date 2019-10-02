@@ -2,7 +2,7 @@
 title: 分析 Container（1）
 ---
 
-昨天有提到 [Application][] 是 Laravel [Service Container][] 的實作，它繼承了 [Container][]，是負責管理元件如何產生的元件。比方說：
+昨天有提到 [Application][] 是 Laravel [Service Container][] 的實作，它繼承了 [Container][]，是負責管理元件如何產生的元件。
 
 ```php
 $container = new Container();
@@ -94,7 +94,7 @@ Illuminate\Container\Container *-- Illuminate\Container\ContextualBindingBuilder
 * `Illuminate\Container\BoundMethod`（下稱 `BoundMethod`）為類似 helper 的輔助角色
 * `Illuminate\Container\ContextualBindingBuilder`（下稱 `ContextualBindingBuilder`）也是輔助角色，協助產生 container 的設定。
 
-## `singleton()` 做了什麼事
+## singleton() 做了什麼事
 
 從一開始的範例，我們知道 `singleton()` 是設定 callback 表示該物件如何建置，而 `make()` 則是產生。首先看 [`singleton()`](https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Container/Container.php#L345-L348) 的實作是什麼：
 
@@ -105,7 +105,7 @@ public function singleton($abstract, $concrete = null)
 }
 ```
 
-這裡可以了解，它是 `bind()` 的另一種呼叫方法，因為 PHP 並不像 Java 有多型，所以常會使用這一類的寫法增加可用性與可閱讀性。如：
+這裡可以了解，它是 `bind()` 的另一種呼叫方法，因為 PHP 並不像 Java 有重載，所以常會使用這一類的寫法增加可用性與可閱讀性。如：
 
 ```php
 public function getData(array $query)
@@ -173,7 +173,7 @@ protected function getClosure($abstract, $concrete)
 
 這兩個之間的差異，只要繼續看 `make()` 就會了解。
 
-## `make()` 做了什麼事
+## make() 做了什麼事
 
 [`make()`](https://github.com/laravel/framework/blob/v5.7.6/src/Illuminate/Container/Container.php#L599-L602) 跟 `singleton()` 類似，也是在呼叫另一個方法 `resolve()`，不過這個做法會比較像是 proxy pattern。
 

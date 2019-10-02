@@ -2,11 +2,11 @@
 title: 分析 Collection（1）
 ---
 
+來看看 [Collection][] 吧！
+
 > 今天筆者生病，只能簡單打
 
-想想，還是就來看看 [Collection][] 吧！
-
-Laravel 用來處理 array 的小幫手，至今已知道有三種類型：第一種就是 [helpers.php][] 所提供的函式，第二種則是 [Arr][] 類別所提供的靜態方法，今天要講的是第三種－－[Collection][]。
+>Laravel 用來處理 array 的小幫手，至今已知道有三種類型：第一種就是 [helpers.php][] 所提供的函式，第二種則是 [Arr][] 類別所提供的靜態方法，今天要講的是第三種－－[Collection][]。
 
 ## Collection 與原生 PHP 函式之間的關係
 
