@@ -11,6 +11,8 @@ title: iT 邦幫忙鐵人賽
 
 ### 追星
 
+* [每日挖個坑，用坑填起耍廢聊天室！](https://ithelp.ithome.com.tw/users/20111962/ironman/2889) - 挖洗菜呱
+* [30天，試著成為一個更開心的人](https://ithelp.ithome.com.tw/users/20112529/ironman/2875) - Wen Chien
 * [Git 其然，Git 其所以然](https://ithelp.ithome.com.tw/users/20103676/ironman/2846) - 若虛
 * [和艦長一起 30 天玩轉 GitLab](https://ithelp.ithome.com.tw/users/20120986/ironman/2733) - ChengWeiChen
 * [下班加減學點Golang與Docker](https://ithelp.ithome.com.tw/users/20104930/ironman/2647) - Nathan Lu
