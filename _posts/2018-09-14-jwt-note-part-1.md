@@ -58,13 +58,14 @@ Header 通常會由兩個部分組成：
 Payload 則是存放 claim，代表著實體或使用者相關的資訊。有三種類型：
 
 *   Registered Claims：這是預定義的 claim，可加可不加，但建議要加，如
+
     | Column | Full name | 中文 |
     | --- | --- | --- |
     | `iss` | Issuer | 發行人 |
-    | `sub` | Subject | N/A （對象） |
-    | `aud` | Audience | N/A （收件人） |
+    | `sub` | Subject | 對象 |
+    | `aud` | Audience | 收件人 |
     | `exp` | Expiration Time | 到期時間 |
-    | `nbf` | Not Before | 時間之前（不處理） |
+    | `nbf` | Not Before | 時間之前不處理 |
     | `iat` | Issued At | 發行時間 |
     | `jti` | JWT ID | JWT 的唯一識別碼 |
 *   Public Claims：在 [IANA JSON Web Token Registry](https://www.iana.org/assignments/jwt/jwt.xhtml) 上註冊的名稱，即是 Public Claims。
