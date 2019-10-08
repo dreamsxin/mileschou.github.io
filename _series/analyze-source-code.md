@@ -5,7 +5,7 @@ layout: collections
 
 ## Laravel
 
-可參考鐵人賽文章 [Laravel 原始碼分析]({% link _ironman/analyze-laravel.md %})。
+可參考鐵人賽文章 [Laravel 原始碼分析]({% post_url ironman/2019/2018-10-15-analyze-laravel %})。
 
 ### Laravel 套件開發小提醒
     

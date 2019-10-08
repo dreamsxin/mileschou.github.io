@@ -20,7 +20,7 @@ title: iT 邦幫忙鐵人賽
 
 ## 第十屆
 
-* [Laravel 原始碼分析]({% link _ironman/analyze-laravel.md %}) - iT 邦幫忙第十屆鐵人賽優選
+* [Laravel 原始碼分析]({% post_url ironman/2019/2018-10-15-analyze-laravel %}) - iT 邦幫忙第十屆鐵人賽優選
 
 ## 第九屆
 

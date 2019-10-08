@@ -19,6 +19,12 @@ defaults:
       category: [ironman, authentication]
       description: 我是誰？我在哪？
   - scope:
+      path: _posts/ironman/2019/analyze-laravel
+      type: posts
+    values:
+      category: [ironman, analyze-laravel]
+      description: Laravel 原始碼分析
+  - scope:
       path: _posts/ironman/2018/decompose-wheels
       type: posts
     values:
@@ -42,22 +48,9 @@ defaults:
     values:
       category: [ironman, start-to-ci]
       description: CI 從入門到入坑
-  - scope:
-      type: ironman
-    values:
-      layout: ironman
-      permalink: /:collection/:path
-  - scope:
-      path: _ironman/analyze-laravel
-    values:
-      series: analyze-laravel
-      description: Laravel 原始碼分析
-      topic_tags: [Laravel]
 
 collections:
   elixir:
-    output: true
-  ironman:
     output: true
   series:
     output: true
