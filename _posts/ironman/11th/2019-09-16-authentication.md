@@ -26,10 +26,6 @@ tags:
 
 {% include ironman_posts_toc.html articles=ironman_articles topic="authentication" %}
 
-## 備存
-
-* https://medium.com/@jaydenlin/c3b45d3bbc32
-
 ## 誌謝
 
 * 感謝老婆為了支持我寫作，將家裡打點好好的
