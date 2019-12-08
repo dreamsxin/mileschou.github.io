@@ -50,6 +50,8 @@ defaults:
       description: CI 從入門到入坑
 
 collections:
+  auth:
+    output: true
   elixir:
     output: true
   series:
