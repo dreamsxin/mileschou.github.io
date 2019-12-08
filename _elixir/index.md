@@ -9,7 +9,7 @@ Elixir 的特色簡介如下：
 * 基於 Erlang VM 上，完全跟 Erlang 相容，但語法設計的更加好用，也提供很多語法糖
 * 函數型語言
 * 動態強型別語言，與 Ruby / Python 類似
-* 強型是處理 concurrency，適合開發分散式或雲端運算平台
+* 強項是處理 concurrency，適合開發分散式或雲端運算平台
 
 ## 目錄
 
