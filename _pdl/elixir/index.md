@@ -13,23 +13,23 @@ Elixir 的特色簡介如下：
 
 ## 目錄
 
-* [Introduction]({% link _elixir/note/introduction.md %})
-* [Syntax References]({% link _elixir/note/syntax-references.md %})
-* [Getting Started]({% link _elixir/note/getting-started.md %})
-* [Built-in Types]({% link _elixir/note/built-in-types.md %})
-* [Data Types]({% link _elixir/note/data-types.md %})
-* [Pattern Matching]({% link _elixir/note/pattern-matching.md %})
-* [Control Structures]({% link _elixir/note/control-structures.md %})
-* [Functions]({% link _elixir/note/functions.md %})
-* [Documentation]({% link _elixir/note/documentation.md %})
-* [Composition]({% link _elixir/note/composition.md %})
-* [Pipe Operator]({% link _elixir/note/pipe-operator.md %})
-* [Mix]({% link _elixir/note/mix.md %})
-* [Umbrella Projects]({% link _elixir/note/umbrella-projects.md %})
+* [Introduction]({% link _pdl/elixir/note/introduction.md %})
+* [Syntax References]({% link _pdl/elixir/note/syntax-references.md %})
+* [Getting Started]({% link _pdl/elixir/note/getting-started.md %})
+* [Built-in Types]({% link _pdl/elixir/note/built-in-types.md %})
+* [Data Types]({% link _pdl/elixir/note/data-types.md %})
+* [Pattern Matching]({% link _pdl/elixir/note/pattern-matching.md %})
+* [Control Structures]({% link _pdl/elixir/note/control-structures.md %})
+* [Functions]({% link _pdl/elixir/note/functions.md %})
+* [Documentation]({% link _pdl/elixir/note/documentation.md %})
+* [Composition]({% link _pdl/elixir/note/composition.md %})
+* [Pipe Operator]({% link _pdl/elixir/note/pipe-operator.md %})
+* [Mix]({% link _pdl/elixir/note/mix.md %})
+* [Umbrella Projects]({% link _pdl/elixir/note/umbrella-projects.md %})
 
 ## Phoenix
 
-* [Installation]({% link _elixir/phoenix/installation.md %})
+* [Installation]({% link _pdl/elixir/phoenix/installation.md %})
 
 ## References
 

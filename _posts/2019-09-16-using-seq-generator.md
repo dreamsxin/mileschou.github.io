@@ -6,7 +6,7 @@ tag:
 
 執行腳本有時會需要自動產生連號，`seq` 可以很輕易做到這件事。
 
-> 這邊的 range 語法是模仿 [Elixir]({% link _elixir/index.md %}) 的寫法
+> 這邊的 range 語法是模仿 [Elixir]({% link _pdl/elixir/index.md %}) 的寫法
 
 比方說，如果要產生 1..10 可以下這個指令
 

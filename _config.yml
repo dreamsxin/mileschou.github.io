@@ -52,7 +52,7 @@ defaults:
 collections:
   auth:
     output: true
-  elixir:
+  pdl:
     output: true
   series:
     output: true
